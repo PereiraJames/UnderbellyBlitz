@@ -1,8 +1,8 @@
 # UnderBellyBlitzCardGame README
- Personal Project Card Game
+Personal Project Card Game
 
 ## Introduction:
-This a Unity/C# developed game using the Mirror Network Framework. It is a typical Trading Card Game similar to Hearthstone or Magic The Gathering.
+This my Unity/C# developed game using the Mirror Network Framework. It is a typical Trading Card Game similar to Hearthstone or Magic The Gathering.
 
 The main structure of the game is deployed but improvements and additional features are still being added.
 
