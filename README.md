@@ -10,9 +10,6 @@ The main structure of the game is deployed but improvements and additional featu
 
 Download Game - {}
 
-Open the Build File and download the zipfile "CardGame".
-Unzip and run the "CardGame.exe" file.
-
 Because it has only been set-up as a local host multiplayer game, you will need to open two windows of the game to play. Essentially playing both sides of the game.
 Implementation of online multiplayer in the works.
 
@@ -52,7 +49,7 @@ Warcry - When the card enters play, it activates the ability.
 End of Turn - When you end your turn, it activates the ability.
 
 ## Features to be added:
-Card Animations
-More Card Mechanics
-Chat Box
-Better UI/UX design 
+1) Card Animations
+2) More Card Mechanics
+3) Chat Box
+4) Improvement to UI/UX design
