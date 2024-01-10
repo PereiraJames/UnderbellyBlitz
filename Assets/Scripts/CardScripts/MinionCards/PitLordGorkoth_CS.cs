@@ -21,7 +21,7 @@ public class PitLordGorkoth_CS : CardAbilities
                 {
                     totalDead ++;
                 }
-                PlayerManager.CmdDealDamage(child.gameObject, 1);
+                PlayerManager.CmdDealDamage(child.gameObject, -1);
             }
         }
 
@@ -33,7 +33,7 @@ public class PitLordGorkoth_CS : CardAbilities
                 {
                     totalDead ++;
                 }
-                PlayerManager.CmdDealDamage(child.gameObject, 1);
+                PlayerManager.CmdDealDamage(child.gameObject, -1);
             }
         }
 

@@ -18,7 +18,7 @@ public class Sharpshooter_CS : CardAbilities
             {
                 if (child.gameObject.tag == "Cards")
                 {
-                    PlayerManager.CmdDealDamage(child.gameObject, 2);
+                    PlayerManager.CmdDealDamage(child.gameObject, -2);
                 }
             }
         }
@@ -39,7 +39,7 @@ public class Sharpshooter_CS : CardAbilities
 
             foreach (GameObject child in selectedGameObjects)
             {
-                PlayerManager.CmdDealDamage(child.gameObject, 2);
+                PlayerManager.CmdDealDamage(child.gameObject, -2);
             }
         }
     }

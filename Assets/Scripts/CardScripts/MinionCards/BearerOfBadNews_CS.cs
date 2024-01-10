@@ -14,7 +14,7 @@ public class BearerOfBadNews_CS : CardAbilities
         {
             if (child.gameObject.tag == "Cards" && child.gameObject != gameObject)
             {
-                PlayerManager.CmdDealDamage(child.gameObject, 1);
+                PlayerManager.CmdDealDamage(child.gameObject, -1);
             }
         }
     }

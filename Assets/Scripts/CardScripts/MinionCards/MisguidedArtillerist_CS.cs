@@ -14,7 +14,7 @@ public class MisguidedArtillerist_CS : CardAbilities
         {
             if (child.gameObject.tag == "Cards")
             {
-                PlayerManager.CmdDealDamage(child.gameObject, 1);
+                PlayerManager.CmdDealDamage(child.gameObject, -1);
             }
         }
 
@@ -22,7 +22,7 @@ public class MisguidedArtillerist_CS : CardAbilities
         {
             if (child.gameObject.tag == "Cards")
             {
-                PlayerManager.CmdDealDamage(child.gameObject, 1);
+                PlayerManager.CmdDealDamage(child.gameObject, -1);
             }
         }
 

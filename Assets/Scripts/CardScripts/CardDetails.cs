@@ -52,7 +52,7 @@ public class CardDetails : NetworkBehaviour
 
     public void SetCardHealth(int DamageDone)
     {
-        CardHealth -= DamageDone;
+        CardHealth += DamageDone;
         UpdateCardText();
     }
 

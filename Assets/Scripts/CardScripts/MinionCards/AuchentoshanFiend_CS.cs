@@ -33,7 +33,7 @@ public class AuchentoshanFiend_CS : CardAbilities
                 {
                     if(targetRandom == count)
                     {
-                        PlayerManager.CmdDealDamage(child.gameObject, 2);
+                        PlayerManager.CmdDealDamage(child.gameObject, -2);
                     }
                     count++;
                 }
@@ -49,7 +49,7 @@ public class AuchentoshanFiend_CS : CardAbilities
                 {
                     if(targetRandom == count)
                     {
-                        PlayerManager.CmdDealDamage(child.gameObject, 2);
+                        PlayerManager.CmdDealDamage(child.gameObject, -2);
                     }
                     count++;
                 }

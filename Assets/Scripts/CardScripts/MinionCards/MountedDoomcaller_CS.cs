@@ -28,7 +28,7 @@ public class MountedDoomcaller_CS : CardAbilities
         {
             if (child.gameObject.tag == "Cards")
             {
-                PlayerManager.CmdDealDamage(child.gameObject, 2);
+                PlayerManager.CmdDealDamage(child.gameObject, -2);
             }
         }
     }

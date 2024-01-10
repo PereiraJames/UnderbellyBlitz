@@ -203,7 +203,9 @@ MonoBehaviour:
   CardAttack: 2
   CanAttack: 1
   DoubloonCost: 1
-  amountOfEachCard: 3
+  amountOfEachCard: 0
+  isFrozen: 0
+  isDamaged: 0
   DeckTag: Mark
   CardStats: {fileID: 0}
 --- !u!114 &-67983449846057286

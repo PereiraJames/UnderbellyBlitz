@@ -30,7 +30,7 @@ public class TheonSlothBorne_CS : CardAbilities
         {
             if (child.gameObject.tag == "Cards")
             {
-                PlayerManager.CmdDealDamage(child.gameObject, amountofPlayerCards);
+                PlayerManager.CmdDealDamage(child.gameObject, - amountofPlayerCards);
             }
         } 
     }

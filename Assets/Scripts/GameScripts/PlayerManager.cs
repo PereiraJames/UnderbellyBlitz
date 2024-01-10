@@ -691,6 +691,8 @@ public class PlayerManager : NetworkBehaviour
         int EnemyCardHealth;
         int EnemyAttackDamage;
 
+        
+
         PlayerAttackDamage = AttackingTarget.GetComponent<CardDetails>().GetCardAttack();
         PlayerCardHealth = AttackingTarget.GetComponent<CardDetails>().GetCardHealth();
 
@@ -699,10 +701,14 @@ public class PlayerManager : NetworkBehaviour
 
         PlayerCardHealth -= EnemyAttackDamage;
         EnemyCardHealth -= PlayerAttackDamage;
-        AttackedTarget.GetComponent<CardDetails>().SetCardHealth(EnemyCardHealth);
+
+        Debug.Log(AttackingTarget + " " + PlayerCardHealth);
+        Debug.Log(AttackedTarget + " " + EnemyCardHealth);
+
+        AttackedTarget.GetComponent<CardDetails>().SetCardHealth(-PlayerAttackDamage);
         AttackingTarget.GetComponent<CardDetails>().AttackTurn(false);
 
-        AttackingTarget.GetComponent<CardDetails>().SetCardHealth(PlayerCardHealth);
+        AttackingTarget.GetComponent<CardDetails>().SetCardHealth(-EnemyAttackDamage);
 
         AttackingTarget.GetComponent<CardAbilities>().OnHit();
         AttackedTarget.GetComponent<CardAbilities>().OnHit();

@@ -13,7 +13,7 @@ public class NoviceSpy : CardAbilities
         {
             if (child.gameObject.tag == "Cards")
             {
-                PlayerManager.CmdDealDamage(child.gameObject, 1);
+                PlayerManager.CmdDealDamage(child.gameObject, -1);
             }
         } 
     }

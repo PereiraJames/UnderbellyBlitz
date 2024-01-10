@@ -204,6 +204,8 @@ MonoBehaviour:
   CanAttack: 1
   DoubloonCost: 1
   amountOfEachCard: 2
+  isFrozen: 0
+  isDamaged: 0
   DeckTag: Deion
   CardStats: {fileID: 0}
 --- !u!114 &-67983449846057286
