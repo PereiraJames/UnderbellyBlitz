@@ -673,7 +673,17 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void RpcPermSetCardHealth(GameObject card, int newHealth)
     {
-        card.GetComponent<CardDetails>().PermSetCardHealth(newHealth);
+        int currentCardHealth = card.GetComponent<CardDetails>().GetCardHealth();
+        int MaxCardHealth = card.GetComponent<CardDetails>().GetMaxCardHealth();
+
+        if(newHealth - MaxCardHealth <= 0)
+        {
+            CmdDestroyTarget(card);
+        }
+        else
+        {
+            card.GetComponent<CardDetails>().PermSetCardHealth(newHealth);
+        }
     }
 
     [Command]
@@ -866,8 +876,8 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void RpcSummonMinion(int health, int attack, bool forPlayer, GameObject card)
     {
-        card.GetComponent<CardDetails>().CardHealth = health;
-        card.GetComponent<CardDetails>().CardAttack = attack;
+        card.GetComponent<CardDetails>().CurrentCardHealth = health;
+        card.GetComponent<CardDetails>().CurrentCardAttack = attack;
         CmdUpdateAllCardText();
         if(isOwned)
         {

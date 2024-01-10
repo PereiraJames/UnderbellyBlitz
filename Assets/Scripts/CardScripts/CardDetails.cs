@@ -17,9 +17,12 @@ public class CardDetails : NetworkBehaviour
     public GameObject PlayerSlot;
     public GameObject AttackingDisplay;
     public GameObject AttackingCard;
+    
+    public int MaxCardHealth = 1;
+    public int MaxCardAttack = 1;
 
-    public int CardHealth = 1;
-    public int CardAttack = 1;
+    public int CurrentCardHealth = 1;
+    public int CurrentCardAttack = 1;
     public bool CanAttack = true;
     public int DoubloonCost = 1;
     public int amountOfEachCard = 1;
@@ -33,6 +36,7 @@ public class CardDetails : NetworkBehaviour
 
     void Start()
     {
+
         AttackingDisplay = GameObject.Find("AttackingDisplay");
         PlayerSlot = GameObject.Find("PlayerSlot");
         EnemySlot = GameObject.Find("EnemySlot");
@@ -47,35 +51,48 @@ public class CardDetails : NetworkBehaviour
 
     public int GetCardHealth()
     {
-        return CardHealth;
+        return CurrentCardHealth;
+    }
+
+    public int GetCardAttack()
+    {
+        return CurrentCardAttack;
+    }
+
+    public int GetMaxCardHealth()
+    {
+        return MaxCardHealth;
+    }
+
+    public int GetMaxCardAttack()
+    {
+        return MaxCardAttack;
     }
 
     public void SetCardHealth(int DamageDone)
     {
-        CardHealth += DamageDone;
+        CurrentCardHealth += DamageDone;
         UpdateCardText();
     }
 
     public void PermSetCardHealth(int newHealth)
     {
-        CardHealth = newHealth;
-        UpdateCardText();
-    }
+        int diffHealth = newHealth - MaxCardHealth;
 
-    public int GetCardAttack()
-    {
-        return CardAttack;
+        CurrentCardHealth += diffHealth;
+        MaxCardHealth = newHealth;
+        UpdateCardText();
     }
 
     public void SetCardAttack(int attackAmount)
     {
-        CardAttack = attackAmount;
+        CurrentCardAttack = attackAmount;
         UpdateCardText();
     }
 
     public void ChangeCardAttack(int attackAmount)
     {
-        CardAttack += attackAmount;
+        CurrentCardAttack += attackAmount;
         UpdateCardText();
     }
 
@@ -103,7 +120,7 @@ public class CardDetails : NetworkBehaviour
 
     public void UpdateCardText()
     {
-        gameObject.GetComponentInChildren<Text>().text = CardAttack + " / " + CardHealth;
+        gameObject.GetComponentInChildren<Text>().text = CurrentCardAttack + " / " + CurrentCardHealth;
     }
 
 
