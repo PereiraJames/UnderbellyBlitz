@@ -26,13 +26,13 @@ Objective of the Game: Bring your opponent to 0 HP or have the most Doubloons on
 
 Each player has a hand limit of 8 cards and are only allowed to have 8 cards in play/ on the board.
 
-*Add picture of a card.
+![CardShot](https://github.com/PereiraJames/UnderbellyBlitz/assets/82026997/a31798c4-45a7-41d7-9be1-a8de39102731)
 
 1) Cards Damage amount
 2) Cards Health amount
 3) Cards Doubloon cost
 
-*Add picture of whole screen.
+![WholeScreenShot](https://github.com/PereiraJames/UnderbellyBlitz/assets/82026997/9c790cfe-8945-42a1-845e-8f495fa1b668)
 
 1) Heros Health
 2) Heros Doubloon Amount
@@ -41,12 +41,12 @@ Each player has a hand limit of 8 cards and are only allowed to have 8 cards in 
 5) Community Doubloons
 6) End Turn button
 
-Play cards but dragging and dropping.
+Play cards by dragging and dropping.
 
 ## Card Mechanics:
-Last Resort - Right before the card dies, it activates the ability.
-Warcry - When the card enters play, it activates the ability.
-End of Turn - When you end your turn, it activates the ability.
+1) Last Resort - Right before the card dies, it activates the ability.
+2) Warcry - When the card enters play, it activates the ability.
+3) End of Turn - When you end your turn, it activates the ability.
 
 ## Features to be added:
 1) Card Animations
