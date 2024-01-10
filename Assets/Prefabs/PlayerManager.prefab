@@ -1,0 +1,124 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1991480171998483880
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2673112024076790544}
+  - component: {fileID: -444388287265442713}
+  - component: {fileID: 6260263091876685019}
+  - component: {fileID: 1874083348855495491}
+  m_Layer: 0
+  m_Name: PlayerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2673112024076790544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991480171998483880}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 619.92255, y: 287.4333, z: 6.924085}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-444388287265442713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991480171998483880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 2673112024076790544}
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  coordinateSpace: 0
+  sendIntervalMultiplier: 1
+  timelineOffset: 0
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChange: 1
+  onlySyncOnChangeCorrectionMultiplier: 2
+  rotationSensitivity: 0.01
+  compressRotation: 0
+  positionPrecision: 0.01
+  scalePrecision: 0.01
+--- !u!114 &6260263091876685019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991480171998483880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clientStarted: 0
+  sceneId: 0
+  _assetId: 1173776820
+  serverOnly: 0
+  visible: 0
+  hasSpawned: 0
+--- !u!114 &1874083348855495491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991480171998483880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e629090bb60869e44aff2375d002bd47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  Ping: {fileID: 4618310939913816154, guid: fd10b7475d1c8ad48986e09a048e2eb1, type: 3}
+  UD: {fileID: 4618310939913816154, guid: d67d7b9f3f0e09b428ee28dc4dfb419e, type: 3}
+  FD: {fileID: 4618310939913816154, guid: 80e01be5be46cb640be2451dcc8004bc, type: 3}
+  RS: {fileID: 4618310939913816154, guid: b30eae0fa3a46ed4595f99e547f1fd8d, type: 3}
+  MG: {fileID: 4618310939913816154, guid: b26e528a62d6bd642872299e6ef26db3, type: 3}
+  WinText: {fileID: 7093074639286766092, guid: 7c03d4a2eddb8cf4191f7460566930c8, type: 3}
+  PlayerArea: {fileID: 6552572733706130085, guid: e98daa88ee05a804486a174a207c163a, type: 3}
+  EnemyArea: {fileID: 4338157973597810193, guid: 3df0efb690a9922459a77553553b0cd5, type: 3}
+  PlayerSlot: {fileID: 0}
+  EnemySlot: {fileID: 0}
+  PlayerYard: {fileID: 0}
+  EnemyYard: {fileID: 0}
+  PlayerSockets: []
+  EnemySockets: []
+  cardsPlayed: 0
+  AttackBeingMade: 0
+  AttackedTarget: {fileID: 0}
+  AttackingTarget: {fileID: 0}
+  GameManager: {fileID: 0}
+  CardsPlayed: 0
+  IsMyTurn: 0
