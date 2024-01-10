@@ -6,11 +6,13 @@ This a Unity/C# developed game using the Mirror Network Framework. It is a typic
 
 The main structure of the game is deployed but improvements and additional features are still being added.
 
-## Development:
+## Installation:
 
-Download Game - {}
+Install Game - {}
 
-Because it has only been set-up as a local host multiplayer game, you will need to open two windows of the game to play. Essentially playing both sides of the game.
+Run the "CardGame.exe" file.
+
+Due it has only been set-up as a local host multiplayer game, you will need to open two windows of the game to play. Essentially playing both sides of the game.
 Implementation of online multiplayer in the works.
 
 ## How To Play:
