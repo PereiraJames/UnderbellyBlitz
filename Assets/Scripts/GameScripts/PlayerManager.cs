@@ -246,6 +246,28 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdDealCards(int cardAmount, string deckName)
     {
+        int currentHandsize = 0;
+        if(isOwned)
+        {
+            foreach(Transform child in PlayerArea.GetComponentsInChildren<Transform>())
+            {
+                if(child.gameObject.tag == "Cards")
+                {
+                    currentHandsize ++;
+                }
+            }
+        }
+        else
+        {
+            foreach(Transform child in EnemyArea.GetComponentsInChildren<Transform>())
+            {
+                if(child.gameObject.tag == "Cards")
+                {
+                    currentHandsize ++;
+                }
+            }
+        }
+        
         Debug.Log("CardDealt");
         for (int i = 0; i < cardAmount; i++)
         {
@@ -255,15 +277,17 @@ public class PlayerManager : NetworkBehaviour
                 int ranNum = Random.Range(0,deck.Count - 1);
                 GameObject card = Instantiate(deck[ranNum], new Vector3(0,0,0), Quaternion.identity);
                 NetworkServer.Spawn(card, connectionToClient);
-                if (isOwned && GameManager.PlayerHandSize + 1 < handLimit)
+                if (isOwned && currentHandsize + 1 < handLimit)
                 {
                     RpcSetParentCard(card);
                     deck.RemoveAt(ranNum);
+                    currentHandsize ++;
                 }
-                else if (!isOwned && GameManager.PlayerHandSize + 1 < handLimit)
+                else if (!isOwned && currentHandsize + 1 < handLimit)
                 {
                     RpcSetParentCard(card);
                     deck.RemoveAt(ranNum);
+                    currentHandsize ++;
                 }
                 else
                 {
@@ -937,14 +961,75 @@ public class PlayerManager : NetworkBehaviour
         CmdUpdateAllCardText();
 
         Debug.Log("Placed!");
-        if(isOwned)
+        if(forPlayer)
         {
-            card.transform.SetParent(EnemySlot.transform, false);
+            if(isOwned)
+            {
+                if(AbleToPlaceCard(PlayerSlot))
+                {
+                    card.transform.SetParent(PlayerSlot.transform, false);
+                }
+            }
+            else
+            {
+                if(AbleToPlaceCard(EnemySlot))
+                {
+                    card.transform.SetParent(EnemySlot.transform, false);
+                }
+            }  
         }
         else
         {
-            card.transform.SetParent(PlayerSlot.transform, false);
-        }   
+            if(isOwned)
+            {
+                if(AbleToPlaceCard(EnemySlot))
+                {
+                    card.transform.SetParent(EnemySlot.transform, false);
+                }
+            }
+            else
+            {
+                if(AbleToPlaceCard(PlayerSlot))
+                {
+                    card.transform.SetParent(PlayerSlot.transform, false);
+                }
+            }  
+        }
+
+    }
+
+    public bool AbleToPlaceCard(GameObject Slot)
+    {
+        int count = 0;
+        if(Slot.gameObject.name == "EnemySlot")
+        {
+            foreach (Transform child in EnemySlot.GetComponentsInChildren<Transform>())
+            {
+                if (child.gameObject.tag == "Cards")
+                {
+                    count++;
+                }
+            }
+        }
+        else if (Slot.gameObject.name == "PlayerSlot")
+        {
+            foreach (Transform child in PlayerSlot.GetComponentsInChildren<Transform>())
+            {
+                if (child.gameObject.tag == "Cards")
+                {
+                    count++;
+                }
+            }
+        }
+
+        if(count < 8)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void DiscardCards(int amount, bool forPlayer)

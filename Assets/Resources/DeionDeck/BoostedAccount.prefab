@@ -199,11 +199,15 @@ MonoBehaviour:
   PlayerSlot: {fileID: 0}
   AttackingDisplay: {fileID: 0}
   AttackingCard: {fileID: 0}
-  CardHealth: 3
-  CardAttack: 3
+  MaxCardHealth: 1
+  MaxCardAttack: 1
+  CurrentCardHealth: 1
+  CurrentCardAttack: 1
   CanAttack: 1
   DoubloonCost: 1
-  amountOfEachCard: 2
+  amountOfEachCard: 3
+  isFrozen: 0
+  isDamaged: 0
   DeckTag: Deion
   CardStats: {fileID: 0}
 --- !u!114 &-67983449846057286

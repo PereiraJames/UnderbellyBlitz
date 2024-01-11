@@ -205,7 +205,7 @@ MonoBehaviour:
   CurrentCardAttack: 1
   CanAttack: 0
   DoubloonCost: 1
-  amountOfEachCard: 0
+  amountOfEachCard: 3
   isFrozen: 0
   isDamaged: 0
   DeckTag: Mark

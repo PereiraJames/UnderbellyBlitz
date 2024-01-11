@@ -205,7 +205,7 @@ MonoBehaviour:
   CurrentCardAttack: 1
   CanAttack: 1
   DoubloonCost: 1
-  amountOfEachCard: 3
+  amountOfEachCard: 6
   isFrozen: 0
   isDamaged: 0
   DeckTag: Keagan
