@@ -42,6 +42,7 @@ public class GameManager : NetworkBehaviour
 
         currentEnemyDoubloons = totalEnemyDoubloons;
         currentPlayerDoubloons = totalPlayerDoubloons;
+        UIManager.UpdatePlayerText();
     }
 
     public void CardPlayed()

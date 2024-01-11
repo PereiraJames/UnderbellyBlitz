@@ -339,6 +339,30 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    [Command]
+    public void CmdHeroPowerActive(bool CanHeroPower)
+    {
+        RpcHeroPowerActive(CanHeroPower);
+    }
+
+    [ClientRpc]
+    public void RpcHeroPowerActive(bool CanHeroPower)
+    {
+        if(isOwned)
+        {
+            GameObject HeroPower = GameObject.Find("PlayerHeroPower");
+            if(CanHeroPower)
+            {
+                HeroPower.GetComponent<Image>().color = new Color(255f, 255f, 255f);
+            }
+            else
+            {
+                HeroPower.GetComponent<Image>().color = new Color(100/255f, 100/255f, 100/255f);
+            }
+        }
+    }
+
+
     public void PlayCard(GameObject card)
     {
         CmdPlayCard(card);
@@ -512,6 +536,8 @@ public class PlayerManager : NetworkBehaviour
                     child.GetComponent<CardAbilities>().OnEndTurn();
                 }
             }
+            GameObject HeroPowerButton = GameObject.Find("PlayerHeroPower");
+            HeroPowerButton.GetComponent<HeroDetails>().HeroPowerActive();
         }
 
         CmdShowAttackDisplay("CloseDisplay");
@@ -595,6 +621,8 @@ public class PlayerManager : NetworkBehaviour
     public void RpcDeckSelection(string DeckTag)
     {
         string SelectedDeck = DeckTag;
+        GameObject PlayerImage = GameObject.Find("PlayerImage");
+        GameObject EnemyImage = GameObject.Find("EnemyImage");
 
         Debug.Log("RPCSelectedDeck: " + SelectedDeck);
 
