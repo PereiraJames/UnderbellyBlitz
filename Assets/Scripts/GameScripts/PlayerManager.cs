@@ -399,6 +399,13 @@ public class PlayerManager : NetworkBehaviour
                     Debug.Log("EnemyPlayedCards is empty");
                 }
                 AttackBeingMade = true;
+                AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOn();
+            }
+            else if (EnemyPlayedCards.Count == 0 && state == "OpenDisplay")
+            {
+                AttackDisplayOpened = true;
+                AttackBeingMade = true;
+                AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOn();
             }
             else if (state == "CloseDisplay")
             {
@@ -414,10 +421,18 @@ public class PlayerManager : NetworkBehaviour
                     card.transform.SetParent(EnemySlot.transform, false);
                 }
                 Debug.Log("ClosedDisplay");
+                Debug.Log(AttackingTarget);
+                
+                if(AttackingTarget != null)
+                {
+                    AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOff();
+                }
+    
                 AttackBeingMade = false;
                 DestroyBeingMade = false;
                 AttackDisplayOpened = false;
-
+                AttackingTarget = null;
+                AttackedTarget = null;
             }
             else
             {
@@ -701,47 +716,49 @@ public class PlayerManager : NetworkBehaviour
         int EnemyCardHealth;
         int EnemyAttackDamage;
 
-        
-
         PlayerAttackDamage = AttackingTarget.GetComponent<CardDetails>().GetCardAttack();
         PlayerCardHealth = AttackingTarget.GetComponent<CardDetails>().GetCardHealth();
 
-        EnemyAttackDamage = AttackedTarget.GetComponent<CardDetails>().GetCardAttack();
-        EnemyCardHealth = AttackedTarget.GetComponent<CardDetails>().GetCardHealth();
+        if(AttackedTarget.gameObject.tag == "Cards")
+        {          
+            EnemyAttackDamage = AttackedTarget.GetComponent<CardDetails>().GetCardAttack();
+            EnemyCardHealth = AttackedTarget.GetComponent<CardDetails>().GetCardHealth();
 
-        PlayerCardHealth -= EnemyAttackDamage;
-        EnemyCardHealth -= PlayerAttackDamage;
+            PlayerCardHealth -= EnemyAttackDamage;
+            EnemyCardHealth -= PlayerAttackDamage;
 
-        Debug.Log(AttackingTarget + " " + PlayerCardHealth);
-        Debug.Log(AttackedTarget + " " + EnemyCardHealth);
+            Debug.Log(AttackingTarget + " " + PlayerCardHealth);
+            Debug.Log(AttackedTarget + " " + EnemyCardHealth);
 
-        AttackedTarget.GetComponent<CardDetails>().SetCardHealth(-PlayerAttackDamage);
-        AttackingTarget.GetComponent<CardDetails>().AttackTurn(false);
+            AttackedTarget.GetComponent<CardDetails>().SetCardHealth(-PlayerAttackDamage);
+            AttackingTarget.GetComponent<CardDetails>().SetCardHealth(-EnemyAttackDamage);
 
-        AttackingTarget.GetComponent<CardDetails>().SetCardHealth(-EnemyAttackDamage);
+            AttackingTarget.GetComponent<CardAbilities>().OnHit();
+            AttackedTarget.GetComponent<CardAbilities>().OnHit();
 
-        AttackingTarget.GetComponent<CardAbilities>().OnHit();
-        AttackedTarget.GetComponent<CardAbilities>().OnHit();
-
-        if(EnemyCardHealth < 1)
-        {
-            AttackedTarget.GetComponent<CardZoom>().OnHoverExit();
-            Debug.Log("RPCardAttack(): " + gameObject);
-            AttackedTarget.GetComponent<CardAbilities>().OnLastResort();
-            Destroy(AttackedTarget);
+            if(EnemyCardHealth < 1)
+            {
+                AttackedTarget.GetComponent<CardZoom>().OnHoverExit();
+                Debug.Log("RPCardAttack(): " + gameObject);
+                AttackedTarget.GetComponent<CardAbilities>().OnLastResort();
+                Destroy(AttackedTarget);
+            }
+            if(PlayerCardHealth < 1)
+            {
+                AttackingTarget.GetComponent<CardZoom>().OnHoverExit();
+                Debug.Log("RPCardAttack(): " + gameObject);
+                AttackingTarget.GetComponent<CardAbilities>().OnLastResort();
+                Destroy(AttackingTarget);
+            }        
+            
+            CmdUpdateAllCardText();
         }
-        if(PlayerCardHealth < 1)
+        else
         {
-            AttackingTarget.GetComponent<CardZoom>().OnHoverExit();
-            Debug.Log("RPCardAttack(): " + gameObject);
-            AttackingTarget.GetComponent<CardAbilities>().OnLastResort();
-            Destroy(AttackingTarget);
-        }        
-        
-        CmdUpdateAllCardText();
+            CmdGMEnemyHealth(-PlayerAttackDamage);
+        }
 
-        AttackingTarget = null;
-        AttackedTarget = null;
+        AttackingTarget.GetComponent<CardDetails>().AttackTurn(false);
     }
 
     [Command]
@@ -865,6 +882,40 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    [Server]
+    public void GiveOtherPlayerAuthority(GameObject card)
+    { 
+        NetworkIdentity objNetworkIdentity = card.GetComponent<NetworkIdentity>();
+
+        if (objNetworkIdentity.isOwned)
+        {
+            // Get all connections (players) on the server
+            foreach (var connection in NetworkServer.connections)
+            {
+                // Skip the server connection (connectionId = 0)
+                if (connection.Key == 0)
+                    continue;
+
+                // Skip the current owner's connection
+                if (connection.Value == objNetworkIdentity.connectionToClient)
+                    continue;
+
+                // Assign authority to the next available player
+                objNetworkIdentity.RemoveClientAuthority();
+                objNetworkIdentity.AssignClientAuthority(connection.Value);
+                
+                Debug.Log($"Authority transferred from {connectionToClient} to {connection.Value}");
+                return; // Authority transferred, exit the loop
+            }
+
+            Debug.Log("No other players to transfer authority to.");
+        }
+        else
+        {
+            Debug.Log("The GameObject doesn't have authority to transfer.");
+        }
+    }
+
     [Command]
     public void CmdSummonMinion(int health, int attack, bool forPlayer)
     {
@@ -876,36 +927,24 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void RpcSummonMinion(int health, int attack, bool forPlayer, GameObject card)
     {
-        card.GetComponent<CardDetails>().CurrentCardHealth = health;
-        card.GetComponent<CardDetails>().CurrentCardAttack = attack;
+        if(!forPlayer)
+        {
+            GiveOtherPlayerAuthority(card);
+        }
+        
+        card.GetComponent<CardDetails>().MaxCardHealth = health;
+        card.GetComponent<CardDetails>().MaxCardAttack = attack;
         CmdUpdateAllCardText();
+
+        Debug.Log("Placed!");
         if(isOwned)
         {
-            if(forPlayer)
-            {
-                card.transform.SetParent(PlayerSlot.transform, false);
-                Debug.Log("A");
-            }
-            else
-            {
-                card.transform.SetParent(EnemySlot.transform, false);
-                Debug.Log("B");
-            }
+            card.transform.SetParent(EnemySlot.transform, false);
         }
         else
         {
-            if(forPlayer)
-            {
-                card.transform.SetParent(EnemySlot.transform, false);
-                Debug.Log("C");
-
-            }
-            else
-            {
-                card.transform.SetParent(PlayerSlot.transform, false);
-                Debug.Log("D");
-            }
-        }
+            card.transform.SetParent(PlayerSlot.transform, false);
+        }   
     }
 
     public void DiscardCards(int amount, bool forPlayer)

@@ -205,12 +205,35 @@ public class CardDetails : NetworkBehaviour
 
     public void CardHover()
     {
-        
-        gameObject.GetComponent<Outline>().effectColor = Color.blue;
-        gameObject.GetComponent<Outline>().effectDistance = new Vector2(10,10);
+        transform.localScale = transform.localScale + new Vector3(.3f, .3f, 0);
     }
 
     public void CardUnHover()
+    {
+        transform.localScale = transform.localScale + new Vector3(-.3f, -.3f, 0);
+    }
+
+    public void CardAttackHighlightOn()
+    {
+        if(PlayerManager.AttackingTarget == null)
+        {
+            gameObject.GetComponent<Outline>().effectColor = Color.blue;
+            gameObject.GetComponent<Outline>().effectDistance = new Vector2(10,10);
+        }
+        else if(PlayerManager.AttackingTarget != null)
+        {
+            PlayerManager.AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOff();
+            gameObject.GetComponent<Outline>().effectColor = Color.blue;
+            gameObject.GetComponent<Outline>().effectDistance = new Vector2(10,10);
+        }
+        else
+        {
+            Debug.Log("ErrorCardAttackHighlight");
+        }
+        
+    }
+
+    public void CardAttackHighlightOff()
     {
         gameObject.GetComponent<Outline>().effectColor = Color.red;
         gameObject.GetComponent<Outline>().effectDistance = new Vector2(1,1);
