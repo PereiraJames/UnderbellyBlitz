@@ -154,12 +154,16 @@ public class HeroDetails : NetworkBehaviour
 
     public void HeroPowerInactive(int heroPowerCost)
     {
+        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkIdentity.GetComponent<PlayerManager>();
         PlayerManager.CmdUpdateDoubloons(heroPowerCost,false);
         PlayerManager.CmdHeroPowerActive(false);
     }
 
     public void HeroPowerActive()
     {
+        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkIdentity.GetComponent<PlayerManager>();
         PlayerManager.CmdHeroPowerActive(true);
     }
     

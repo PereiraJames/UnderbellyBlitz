@@ -18,7 +18,7 @@ public class IrritatedGuest_CS : CardAbilities
     {
         if(isOwned)
         {
-            PlayerManager.CmdCardStatChange(2,1,gameObject);
+            PlayerManager.CmdCardStatChange(2,0,gameObject);
         }
     }
     

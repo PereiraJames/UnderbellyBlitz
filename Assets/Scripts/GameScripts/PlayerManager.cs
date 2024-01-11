@@ -806,13 +806,15 @@ public class PlayerManager : NetworkBehaviour
             Debug.Log(AttackingTarget + " " + PlayerCardHealth);
             Debug.Log(AttackedTarget + " " + EnemyCardHealth);
 
+            AttackingTarget.GetComponent<CardAbilities>().OnHit();
+            AttackedTarget.GetComponent<CardAbilities>().OnHit();
+
 
             AttackingTarget.GetComponent<CardDetails>().AttackTurn(false);
             AttackedTarget.GetComponent<CardDetails>().SetCardHealth(-PlayerAttackDamage);
             AttackingTarget.GetComponent<CardDetails>().SetCardHealth(-EnemyAttackDamage);
-            
-            AttackingTarget.GetComponent<CardAbilities>().OnHit();
-            AttackedTarget.GetComponent<CardAbilities>().OnHit();
+
+            CmdUpdateAllCardText();
 
             if(EnemyCardHealth < 1)
             {
@@ -829,7 +831,7 @@ public class PlayerManager : NetworkBehaviour
                 Destroy(AttackingTarget);
             }        
             
-            CmdUpdateAllCardText();
+            
         }
         else
         {
@@ -884,17 +886,20 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void RpcCardStatChange(int attack, int health, GameObject card)
     {
-        card.GetComponent<CardDetails>().SetCardHealth(health);
-        card.GetComponent<CardDetails>().ChangeCardAttack(attack);
-
-        int CardHealth = card.GetComponent<CardDetails>().GetCardHealth();
-        CmdUpdateAllCardText();
-
-        if(CardHealth < 1)
+        if(card != null)
         {
-            card.GetComponent<CardZoom>().OnHoverExit();
-            card.GetComponent<CardAbilities>().OnLastResort();
-            Destroy(card);
+            int CardHealth = card.GetComponent<CardDetails>().GetCardHealth();
+            
+            if(CardHealth < 1)
+            {
+                card.GetComponent<CardZoom>().OnHoverExit();
+                card.GetComponent<CardAbilities>().OnLastResort();
+                Destroy(card);
+            }
+
+            card.GetComponent<CardDetails>().SetCardHealth(health);
+            card.GetComponent<CardDetails>().ChangeCardAttack(attack);
+            CmdUpdateAllCardText();
         }
     }
 
