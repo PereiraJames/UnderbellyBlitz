@@ -316,6 +316,29 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    [Command]
+    public void CmdCardSleep(bool CanAttack, GameObject card)
+    {
+        RpcCardSleep(CanAttack, card);
+    }
+
+    [ClientRpc]
+    public void RpcCardSleep(bool CanAttack, GameObject card)
+    {
+        if(card != null)
+        {
+            if(CanAttack)
+            {
+                card.GetComponent<Image>().color = new Color(255f, 255f, 255f);
+            }
+            else
+            {
+                card.GetComponent<Image>().color = new Color(200/255f, 200/255f, 200/255f);
+            }
+            card.GetComponent<CardDetails>().UpdateCardText();
+        }
+    }
+
     public void PlayCard(GameObject card)
     {
         CmdPlayCard(card);
@@ -366,6 +389,7 @@ public class PlayerManager : NetworkBehaviour
                 card.GetComponent<CardFlipper>().Flip();
                 GameManager.EnemyHandSize --;
             }
+            card.GetComponent<CardDetails>().AttackTurn(false);
             CardsPlayed++;
         }
         else
@@ -754,9 +778,11 @@ public class PlayerManager : NetworkBehaviour
             Debug.Log(AttackingTarget + " " + PlayerCardHealth);
             Debug.Log(AttackedTarget + " " + EnemyCardHealth);
 
+
+            AttackingTarget.GetComponent<CardDetails>().AttackTurn(false);
             AttackedTarget.GetComponent<CardDetails>().SetCardHealth(-PlayerAttackDamage);
             AttackingTarget.GetComponent<CardDetails>().SetCardHealth(-EnemyAttackDamage);
-
+            
             AttackingTarget.GetComponent<CardAbilities>().OnHit();
             AttackedTarget.GetComponent<CardAbilities>().OnHit();
 
@@ -782,7 +808,7 @@ public class PlayerManager : NetworkBehaviour
             CmdGMEnemyHealth(-PlayerAttackDamage);
         }
 
-        AttackingTarget.GetComponent<CardDetails>().AttackTurn(false);
+        
     }
 
     [Command]
@@ -958,6 +984,11 @@ public class PlayerManager : NetworkBehaviour
         
         card.GetComponent<CardDetails>().MaxCardHealth = health;
         card.GetComponent<CardDetails>().MaxCardAttack = attack;
+        card.GetComponent<CardDetails>().CurrentCardHealth = health;
+        card.GetComponent<CardDetails>().CurrentCardAttack = attack;
+        card.GetComponent<CardDetails>().CanAttack = false;
+        CmdCardSleep(false, card);
+        
         CmdUpdateAllCardText();
 
         Debug.Log("Placed!");
@@ -995,6 +1026,7 @@ public class PlayerManager : NetworkBehaviour
                 }
             }  
         }
+        
 
     }
 

@@ -23,7 +23,7 @@ public class CardDetails : NetworkBehaviour
 
     public int CurrentCardHealth = 1;
     public int CurrentCardAttack = 1;
-    public bool CanAttack = true;
+    public bool CanAttack = false;
     public int DoubloonCost = 1;
     public int amountOfEachCard = 1;
 
@@ -45,6 +45,8 @@ public class CardDetails : NetworkBehaviour
         Canvas = GameObject.Find("Main Canvas");
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+        CurrentCardAttack = MaxCardAttack;
+        CurrentCardHealth = MaxCardHealth;
 
         UpdateCardText();
     }
@@ -103,19 +105,13 @@ public class CardDetails : NetworkBehaviour
 
     public void AttackTurn(bool HasAttackedThisTurn)
     {
-       
         CanAttack = HasAttackedThisTurn;
         Debug.Log(CanAttack);
-        if(CanAttack)
+        if(gameObject != null)
         {
-            gameObject.GetComponent<Image>().color = new Color(255, 255, 255);
+            PlayerManager.CmdCardSleep(CanAttack, gameObject);
         }
-        else
-        {
-            gameObject.GetComponent<Image>().color = new Color(63, 63, 63);
-        }
-
-        UpdateCardText();
+        
     }
 
     public void UpdateCardText()

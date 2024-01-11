@@ -90,7 +90,7 @@ public class GameManager : NetworkBehaviour
         {
             if (child.gameObject.tag == "Cards")
             {
-                child.GetComponent<CardDetails>().CanAttack = true;
+                child.GetComponent<CardDetails>().AttackTurn(true);
             }
         }        
         

@@ -196,7 +196,7 @@ MonoBehaviour:
   PlayerSlot: {fileID: 0}
   AttackingDisplay: {fileID: 0}
   AttackingCard: {fileID: 0}
-  MaxCardHealth: 1
+  MaxCardHealth: 3
   MaxCardAttack: 1
   CurrentCardHealth: 1
   CurrentCardAttack: 1
