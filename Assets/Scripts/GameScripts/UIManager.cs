@@ -68,6 +68,7 @@ public class UIManager : NetworkBehaviour
     
     public void UpdatePlayerText()
     {
+        GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         PlayerHealthText.GetComponent<Text>().text = GameManager.PlayerHealth.ToString();
         EnemyHealthText.GetComponent<Text>().text = GameManager.EnemyHealth.ToString();
         PlayerDblText.GetComponent<Text>().text =  GameManager.currentPlayerDoubloons + "/" + GameManager.totalPlayerDoubloons;

@@ -459,21 +459,22 @@ public class PlayerManager : NetworkBehaviour
             {
                 Debug.Log("OpenedDisplay");
                 AttackDisplayOpened = true;
-                if(EnemyPlayedCards.Count > 0)
-                {
-                    foreach (GameObject card in EnemyPlayedCards)
-                    {
-                        card.transform.SetParent(AttackingDisplay.transform, false);
-                    }
-                }
-                else
-                {
-                    Debug.Log("EnemyPlayedCards is empty");
-                }
+                EnemySlot.transform.localScale = new Vector3 (1.45f,1.45f,0);
+                // if(EnemyPlayedCards.Count > 0)
+                // {
+                //     foreach (GameObject card in EnemyPlayedCards)
+                //     {
+                //         card.transform.SetParent(AttackingDisplay.transform);
+                //     }
+                // }
+                // else
+                // {
+                //     Debug.Log("EnemyPlayedCards is empty");
+                // }
                 AttackBeingMade = true;
                 AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOn();
             }
-            else if (EnemyPlayedCards.Count == 0 && state == "OpenDisplay")
+            else if (EnemyPlayedCards.Count == 0 && state == "OpenDisplay") // For attacking, if no minions - you have the option to attack enemy hero.
             {
                 AttackDisplayOpened = true;
                 AttackBeingMade = true;
@@ -481,17 +482,18 @@ public class PlayerManager : NetworkBehaviour
             }
             else if (state == "CloseDisplay")
             {
-                foreach (Transform child in AttackingDisplay.GetComponentsInChildren<Transform>())
-                {
-                    if(child.gameObject.tag == "Cards")
-                    {
-                        EnemyPlayedCards.Add(child.gameObject);
-                    }
-                }
-                foreach (GameObject card in EnemyPlayedCards)
-                {
-                    card.transform.SetParent(EnemySlot.transform, false);
-                }
+                // foreach (Transform child in AttackingDisplay.GetComponentsInChildren<Transform>())
+                // {
+                //     if(child.gameObject.tag == "Cards")
+                //     {
+                //         EnemyPlayedCards.Add(child.gameObject);
+                //     }
+                // }
+                // foreach (GameObject card in EnemyPlayedCards)
+                // {
+                //     card.transform.SetParent(EnemySlot.transform, false);
+                // }
+                EnemySlot.transform.localScale = new Vector3 (1.3f,1.3f,0);
                 Debug.Log("ClosedDisplay");
                 Debug.Log(AttackingTarget);
                 
