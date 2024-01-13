@@ -8,11 +8,6 @@ public class TheonSlothBorne_CS : CardAbilities
 {
     public override void OnEntry()
     {
-      
-    }
-
-    public override void OnEndTurn()
-    {
         GameObject EnemySlot = PlayerManager.EnemySlot;
         GameObject PlayerSlot = PlayerManager.PlayerSlot;
 
@@ -33,6 +28,11 @@ public class TheonSlothBorne_CS : CardAbilities
                 PlayerManager.CmdDealDamage(child.gameObject, - amountofPlayerCards);
             }
         } 
+    }
+
+    public override void OnEndTurn()
+    {
+       
     }
 
     public override void OnHit()

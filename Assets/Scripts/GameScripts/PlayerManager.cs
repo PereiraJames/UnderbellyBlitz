@@ -268,7 +268,6 @@ public class PlayerManager : NetworkBehaviour
             }
         }
         
-        Debug.Log("CardDealt");
         for (int i = 0; i < cardAmount; i++)
         {
             List<GameObject> deck = CmdWhichDeck(deckName);
@@ -304,6 +303,7 @@ public class PlayerManager : NetworkBehaviour
         if(isOwned)
         {
             card.transform.SetParent(PlayerArea.transform, false);
+            card.GetComponent<CardDetails>().inHand = true;
             GameManager.PlayerDeckSize --;
             GameManager.PlayerHandSize ++;
         }
@@ -405,6 +405,8 @@ public class PlayerManager : NetworkBehaviour
             {
                 card.transform.SetParent(PlayerSlot.transform, false); //Make sure its the right dropzone variable
                 CmdGMCardPlayed();
+                card.GetComponent<CardDetails>().inHand = false;
+                card.GetComponent<CardDetails>().CardUnHover();
                 GameManager.PlayerHandSize --;
             }
             if(!isOwned)
@@ -459,18 +461,17 @@ public class PlayerManager : NetworkBehaviour
             {
                 Debug.Log("OpenedDisplay");
                 AttackDisplayOpened = true;
-                EnemySlot.transform.localScale = new Vector3 (1.45f,1.45f,0);
-                // if(EnemyPlayedCards.Count > 0)
-                // {
-                //     foreach (GameObject card in EnemyPlayedCards)
-                //     {
-                //         card.transform.SetParent(AttackingDisplay.transform);
-                //     }
-                // }
-                // else
-                // {
-                //     Debug.Log("EnemyPlayedCards is empty");
-                // }
+                if(EnemyPlayedCards.Count > 0)
+                {
+                    foreach (GameObject card in EnemyPlayedCards)
+                    {
+                        card.GetComponent<CardDetails>().CardHighlight("red", true);
+                    }
+                }
+                else
+                {
+                    Debug.Log("EnemyPlayedCards is empty");
+                }
                 AttackBeingMade = true;
                 AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOn();
             }
@@ -482,25 +483,25 @@ public class PlayerManager : NetworkBehaviour
             }
             else if (state == "CloseDisplay")
             {
-                // foreach (Transform child in AttackingDisplay.GetComponentsInChildren<Transform>())
-                // {
-                //     if(child.gameObject.tag == "Cards")
-                //     {
-                //         EnemyPlayedCards.Add(child.gameObject);
-                //     }
-                // }
-                // foreach (GameObject card in EnemyPlayedCards)
-                // {
-                //     card.transform.SetParent(EnemySlot.transform, false);
-                // }
-                EnemySlot.transform.localScale = new Vector3 (1.3f,1.3f,0);
+                foreach (Transform child in AttackingDisplay.GetComponentsInChildren<Transform>())
+                {
+                    if(child.gameObject.tag == "Cards")
+                    {
+                        EnemyPlayedCards.Add(child.gameObject);
+                    }
+                }
+                foreach (GameObject card in EnemyPlayedCards)
+                {
+                    card.GetComponent<CardDetails>().CardHighlight("red", false);
+                    card.transform.SetParent(EnemySlot.transform, false);
+                }
                 Debug.Log("ClosedDisplay");
                 Debug.Log(AttackingTarget);
                 
-                if(AttackingTarget != null)
-                {
-                    AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOff();
-                }
+                // if(AttackingTarget != null)
+                // {
+                //     AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOff();
+                // }
     
                 AttackBeingMade = false;
                 DestroyBeingMade = false;
@@ -1026,7 +1027,6 @@ public class PlayerManager : NetworkBehaviour
         
         CmdUpdateAllCardText();
 
-        Debug.Log("Placed!");
         if(forPlayer)
         {
             if(isOwned)

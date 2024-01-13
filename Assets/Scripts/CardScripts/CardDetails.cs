@@ -13,22 +13,29 @@ public class CardDetails : NetworkBehaviour
     private RectTransform RectPlayerSlot;
 
 
-    public GameObject EnemySlot;
-    public GameObject PlayerSlot;
-    public GameObject AttackingDisplay;
-    public GameObject AttackingCard;
+    private GameObject EnemySlot;
+    private GameObject PlayerSlot;
+    private GameObject AttackingDisplay;
+    private GameObject AttackingCard;
     
-    public int MaxCardHealth = 1;
+    public Sprite RedHightlight;
+    public Sprite BlueHighlight;
+    public Sprite GreenHighlight;
+
+    private Image cardHightlightImage;
+
+    public int amountOfEachCard = 1;
+    public int DoubloonCost = 1;
     public int MaxCardAttack = 1;
+    public int MaxCardHealth = 1;
 
     public int CurrentCardHealth = 1;
     public int CurrentCardAttack = 1;
     public bool CanAttack = false;
-    public int DoubloonCost = 1;
-    public int amountOfEachCard = 1;
 
     public bool isFrozen = false;
     public bool isDamaged = false;
+    public bool inHand = false;
 
     public string DeckTag;
 
@@ -47,6 +54,14 @@ public class CardDetails : NetworkBehaviour
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
         CurrentCardAttack = MaxCardAttack;
         CurrentCardHealth = MaxCardHealth;
+
+        foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
+        {
+            if (child.gameObject.name == "CardHighlight")
+            {
+                cardHightlightImage = child.GetComponent<Image>();
+            }
+        }
 
         UpdateCardText();
     }
@@ -106,7 +121,6 @@ public class CardDetails : NetworkBehaviour
     public void AttackTurn(bool HasAttackedThisTurn)
     {
         CanAttack = HasAttackedThisTurn;
-        Debug.Log(CanAttack);
         if(gameObject != null)
         {
             PlayerManager.CmdCardSleep(CanAttack, gameObject);
@@ -116,7 +130,17 @@ public class CardDetails : NetworkBehaviour
 
     public void UpdateCardText()
     {
-        gameObject.GetComponentInChildren<Text>().text = CurrentCardAttack + " / " + CurrentCardHealth;
+        foreach (Text child in gameObject.GetComponentsInChildren<Text>())
+        {
+            if(child.gameObject.name == "AttackHealthText")
+            {
+                child.GetComponent<Text>().text = CurrentCardAttack + " / " + CurrentCardHealth;
+            }
+            else if(child.gameObject.name == "DoubloonText")
+            {
+                child.GetComponent<Text>().text = DoubloonCost.ToString();
+            }
+        }
     }
 
 
@@ -194,33 +218,35 @@ public class CardDetails : NetworkBehaviour
 
     //CARD HIGHLIGHT START
 
-    public bool isDrag()
-    {
-        return gameObject.GetComponent<DragDrop>().isDragging;
-    }
-
     public void CardHover()
-    {
-        transform.localScale = transform.localScale + new Vector3(.3f, .3f, 0);
+    {   
+        if(isOwned && cardHightlightImage.sprite == null)
+        {
+            if (inHand)
+            {
+                CardHighlight("blue", true);
+            }
+            else if (!inHand)
+            {
+                CardHighlight("green", true);
+            }
+        }
     }
 
     public void CardUnHover()
     {
-        transform.localScale = transform.localScale + new Vector3(-.3f, -.3f, 0);
+        CardHighlight("blue", false);
     }
 
     public void CardAttackHighlightOn()
     {
         if(PlayerManager.AttackingTarget == null)
         {
-            gameObject.GetComponent<Outline>().effectColor = Color.blue;
-            gameObject.GetComponent<Outline>().effectDistance = new Vector2(10,10);
+            CardHighlight("green", true);
         }
         else if(PlayerManager.AttackingTarget != null)
         {
-            PlayerManager.AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOff();
-            gameObject.GetComponent<Outline>().effectColor = Color.blue;
-            gameObject.GetComponent<Outline>().effectDistance = new Vector2(10,10);
+            CardHighlight("green", false);
         }
         else
         {
@@ -229,11 +255,32 @@ public class CardDetails : NetworkBehaviour
         
     }
 
-    public void CardAttackHighlightOff()
-    {
-        gameObject.GetComponent<Outline>().effectColor = Color.red;
-        gameObject.GetComponent<Outline>().effectDistance = new Vector2(1,1);
+    public void CardHighlight(string color, bool On)
+    {   
+        if(On)
+        {
+            cardHightlightImage.enabled = true;
+            if(color == "blue")
+            {
+                cardHightlightImage.sprite = BlueHighlight;
+            }
+            else if (color == "red")
+            {
+                cardHightlightImage.sprite = RedHightlight;
+            }
+            else if (color == "green")
+            {
+                cardHightlightImage.sprite = GreenHighlight;
+            }
+        }
+        else
+        {
+            Debug.Log("off");
+            cardHightlightImage.sprite = null;
+            cardHightlightImage.enabled = false;
+        }
+        
     }
-    
+  
     //CARD HIGHLIGHT END
 }

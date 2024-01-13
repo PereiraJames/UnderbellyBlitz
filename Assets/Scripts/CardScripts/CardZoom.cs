@@ -24,7 +24,18 @@ public class CardZoom : MonoBehaviour
             Card.GetComponent<Image>().sprite = zoomCardSprite;
             int CardHealth = gameObject.GetComponent<CardDetails>().GetCardHealth();
             int CardAttack = gameObject.GetComponent<CardDetails>().GetCardAttack();
-            Card.GetComponentInChildren<Text>().text = CardAttack + " / " + CardHealth;
+            int DoubloonCost = gameObject.GetComponent<CardDetails>().DoubloonCost;
+            foreach (Text child in Card.GetComponentsInChildren<Text>())
+            {
+                if(child.gameObject.name == "AttackHealthText")
+                {
+                    child.GetComponent<Text>().text = CardAttack + " / " + CardHealth;
+                }
+                else if(child.gameObject.name == "DoubloonText")
+                {
+                    child.GetComponent<Text>().text = DoubloonCost.ToString();
+                }
+            }
             zoomCard = Instantiate(Card, new Vector2(744, 0), Quaternion.identity);
             zoomCard.transform.SetParent(Canvas.transform, false);
             zoomCard.layer = LayerMask.NameToLayer("Zoom");

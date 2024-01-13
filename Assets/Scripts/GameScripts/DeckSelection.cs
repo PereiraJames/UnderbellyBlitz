@@ -51,8 +51,5 @@ public class DeckSelection : NetworkBehaviour
         }  
 
         gameObject.GetComponent<Button>().interactable = false;
-
-        Debug.Log(GameManager.EnemyReady);
-
     } 
 }
