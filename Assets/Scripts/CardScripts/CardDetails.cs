@@ -21,6 +21,9 @@ public class CardDetails : NetworkBehaviour
     public Sprite RedHightlight;
     public Sprite BlueHighlight;
     public Sprite GreenHighlight;
+    private Sprite GreyHighlight;
+    private string GreyHighlightpath = "Assets/Assets/GreyHighlight.png";
+
 
     private Image cardHightlightImage;
 
@@ -55,6 +58,10 @@ public class CardDetails : NetworkBehaviour
         CurrentCardAttack = MaxCardAttack;
         CurrentCardHealth = MaxCardHealth;
 
+        Texture2D texture = LoadTexture(GreyHighlightpath);
+
+        GreyHighlight =  Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f);;
+
         foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
         {
             if (child.gameObject.name == "CardHighlight")
@@ -62,6 +69,8 @@ public class CardDetails : NetworkBehaviour
                 cardHightlightImage = child.GetComponent<Image>();
             }
         }
+
+        cardHightlightImage.sprite = null;
 
         UpdateCardText();
     }
@@ -146,6 +155,16 @@ public class CardDetails : NetworkBehaviour
 
     //CARD ATTACK START
 
+    private Texture2D LoadTexture(string path)
+    {
+        // Load the texture from the file path
+        byte[] fileData = System.IO.File.ReadAllBytes(path);
+        Texture2D texture = new Texture2D(2, 2);
+        texture.LoadImage(fileData); // LoadImage overwrites the current texture with the image file data
+
+        return texture;
+    }
+
     public void AttackTarget()
     {
         if (PlayerManager.IsMyTurn && isOwned && gameObject.GetComponent<CardDetails>().IsAbleToAttack()) //Must be on players turn, player must have authourity of card and the card must be able to attack
@@ -222,20 +241,31 @@ public class CardDetails : NetworkBehaviour
     {   
         if(isOwned && cardHightlightImage.sprite == null)
         {
-            if (inHand)
+            int cardCost = gameObject.GetComponent<CardDetails>().DoubloonCost;
+            int currentPlayerDoubloons = GameManager.currentPlayerDoubloons;
+
+            if (inHand && cardCost <= currentPlayerDoubloons)
             {
                 CardHighlight("blue", true);
+            }
+            else if (inHand && cardCost > currentPlayerDoubloons)
+            {
+                CardHighlight("grey", true);
             }
             else if (!inHand)
             {
                 CardHighlight("green", true);
             }
+            
         }
     }
 
     public void CardUnHover()
     {
-        CardHighlight("blue", false);
+        if(isOwned && cardHightlightImage.sprite != RedHightlight)
+        {
+            CardHighlight("blue", false);
+        }
     }
 
     public void CardAttackHighlightOn()
@@ -271,6 +301,10 @@ public class CardDetails : NetworkBehaviour
             else if (color == "green")
             {
                 cardHightlightImage.sprite = GreenHighlight;
+            }
+            else if(color == "grey")
+            {
+                cardHightlightImage.sprite = GreyHighlight;
             }
         }
         else

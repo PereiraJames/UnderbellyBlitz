@@ -6,7 +6,7 @@ public class GnomeMiner_CS : CardAbilities
 {
     public override void OnEntry()
     {
-        Debug.Log(" ");
+        PlayerManager.CmdUpdateDoubloons(1, true);
     }
 
     public override void OnEndTurn()

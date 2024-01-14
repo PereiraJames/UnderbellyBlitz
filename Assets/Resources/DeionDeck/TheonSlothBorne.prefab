@@ -210,7 +210,7 @@ MonoBehaviour:
   isFrozen: 0
   isDamaged: 0
   inHand: 0
-  DeckTag: Deion
+  DeckTag: 
   CardStats: {fileID: 0}
 --- !u!114 &-67983449846057286
 MonoBehaviour:

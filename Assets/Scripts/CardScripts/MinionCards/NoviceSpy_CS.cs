@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class NoviceSpy : CardAbilities
+public class NoviceSpy_CS : CardAbilities
 {
     public override void OnEntry()
     {

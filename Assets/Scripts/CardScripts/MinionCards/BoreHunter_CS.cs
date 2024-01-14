@@ -8,6 +8,7 @@ public class BoreHunter_CS : CardAbilities
 {
     public override void OnEntry()
     {
+        gameObject.GetComponent<CardDetails>().DestroyTarget();
         PlayerManager.CmdSummonMinion(2,2,true);
     }
 

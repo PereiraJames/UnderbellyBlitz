@@ -907,6 +907,25 @@ public class PlayerManager : NetworkBehaviour
     }
 
     [Command]
+    public void CmdSetCardStats(int attack, int health, GameObject card)
+    {
+        RpcSetCardStats(attack,health,card);
+    }
+
+    [ClientRpc]
+    public void RpcSetCardStats(int attack, int health, GameObject card)
+    {
+        if(card != null)
+        {
+            card.GetComponent<CardDetails>().MaxCardAttack = attack;
+            card.GetComponent<CardDetails>().MaxCardHealth = health;
+            card.GetComponent<CardDetails>().CurrentCardAttack = attack;
+            card.GetComponent<CardDetails>().CurrentCardHealth = health;
+        }
+    }
+
+    
+    [Command]
     public void CmdSetPlayerHealth(int health)
     {
         RpcSetPlayerHealth(health);
