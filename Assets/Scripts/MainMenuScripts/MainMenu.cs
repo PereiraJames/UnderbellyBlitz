@@ -15,6 +15,16 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("MainGame");
     }
 
+    public void LoadSteamHost()
+    {
+        SceneManager.LoadScene("SteamGame");
+    }
+
+    public void LoadLocalHost()
+    {
+        SceneManager.LoadScene("LocalHostGame");
+    }
+
     public void QuitGame()
     {
         Application.Quit();

@@ -37,7 +37,7 @@ public class GameManager : NetworkBehaviour
     void Start()
     {
         UIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
-        // UIManager.UpdateButtonText(GameState); 
+        UIManager.UpdateButtonText(GameState); 
         PlayerSlot = GameObject.Find("PlayerSlot");
 
         currentEnemyDoubloons = totalEnemyDoubloons;
