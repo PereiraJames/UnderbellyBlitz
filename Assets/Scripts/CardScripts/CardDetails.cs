@@ -8,6 +8,7 @@ public class CardDetails : NetworkBehaviour
 {
 
     private GameManager GameManager;
+    private UIManager UIManager;
     private GameObject Canvas;
     private PlayerManager PlayerManager;
     private RectTransform RectPlayerSlot;
@@ -21,8 +22,7 @@ public class CardDetails : NetworkBehaviour
     public Sprite RedHightlight;
     public Sprite BlueHighlight;
     public Sprite GreenHighlight;
-    private Sprite GreyHighlight;
-    private string GreyHighlightpath = "Assets/Assets/GreyHighlight.png";
+    public Sprite GreyHighlight;
 
 
     private Image cardHightlightImage;
@@ -46,7 +46,7 @@ public class CardDetails : NetworkBehaviour
 
     void Start()
     {
-
+        UIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         AttackingDisplay = GameObject.Find("AttackingDisplay");
         PlayerSlot = GameObject.Find("PlayerSlot");
         EnemySlot = GameObject.Find("EnemySlot");
@@ -58,9 +58,11 @@ public class CardDetails : NetworkBehaviour
         CurrentCardAttack = MaxCardAttack;
         CurrentCardHealth = MaxCardHealth;
 
-        Texture2D texture = LoadTexture(GreyHighlightpath);
 
-        GreyHighlight =  Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.one * 0.5f);;
+        RedHightlight = UIManager.RedCardHighlight;
+        BlueHighlight = UIManager.BlueCardHighlight;
+        GreenHighlight = UIManager.GreenCardHighlight;
+        GreyHighlight = UIManager.GreyCardHighlight;
 
         foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
         {
@@ -154,17 +156,6 @@ public class CardDetails : NetworkBehaviour
 
 
     //CARD ATTACK START
-
-    private Texture2D LoadTexture(string path)
-    {
-        // Load the texture from the file path
-        byte[] fileData = System.IO.File.ReadAllBytes(path);
-        Texture2D texture = new Texture2D(2, 2);
-        texture.LoadImage(fileData); // LoadImage overwrites the current texture with the image file data
-
-        return texture;
-    }
-
     public void AttackTarget()
     {
         if (PlayerManager.IsMyTurn && isOwned && gameObject.GetComponent<CardDetails>().IsAbleToAttack()) //Must be on players turn, player must have authourity of card and the card must be able to attack

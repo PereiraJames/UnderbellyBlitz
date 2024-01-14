@@ -23,13 +23,14 @@ public class UIManager : NetworkBehaviour
     public GameObject WinDisplay;
 
     public Sprite RedPlayerHighlight;
-    public string RedPlayerHighlightPath = "Assets/Assets/RedPlayerEffect.png";
     public Sprite BluePlayerHighlight;
-    public string BluePlayerHighlightPath = "Assets/Assets/BluePlayerEffect.png";
     public Sprite PurplePlayerHighlight;
-    public string PurplePlayerHighlightPath = "Assets/Assets/PurplePlayerEffect.png";
     public Sprite NoPlayerHighlight;
-    public string NoPlayerHighlightPath = "Assets/Assets/NoPlayerEffect.png";
+
+    public Sprite RedCardHighlight;
+    public Sprite BlueCardHighlight;
+    public Sprite GreenCardHighlight;
+    public Sprite GreyCardHighlight;
 
     public Image PlayerHighlight;
     public Image EnemyHighlight;
@@ -42,16 +43,6 @@ public class UIManager : NetworkBehaviour
 
         PlayerHighlight = GameObject.Find("PlayerHighlight").GetComponent<Image>();
         EnemyHighlight = GameObject.Find("EnemyHighlight").GetComponent<Image>();
-
-        Texture2D Blue = LoadTexture(BluePlayerHighlightPath);
-        Texture2D Purple = LoadTexture(PurplePlayerHighlightPath);
-        Texture2D Red = LoadTexture(RedPlayerHighlightPath);
-        Texture2D NoEffect = LoadTexture(NoPlayerHighlightPath);
-
-        BluePlayerHighlight =  Sprite.Create(Blue, new Rect(0, 0, Blue.width, Blue.height), Vector2.one * 0.5f);
-        PurplePlayerHighlight =  Sprite.Create(Purple, new Rect(0, 0, Purple.width, Purple.height), Vector2.one * 0.5f);
-        RedPlayerHighlight =  Sprite.Create(Red, new Rect(0, 0, Red.width, Red.height), Vector2.one * 0.5f);
-        NoPlayerHighlight =  Sprite.Create(NoEffect, new Rect(0, 0, NoEffect.width, NoEffect.height), Vector2.one * 0.5f);
     }
 
     public override void OnStartClient()
@@ -155,14 +146,4 @@ public class UIManager : NetworkBehaviour
     //         EnemyHighlight.sprite = chosenColor;
     //     }
     // }
-
-    private Texture2D LoadTexture(string path)
-    {
-        // Load the texture from the file path
-        byte[] fileData = System.IO.File.ReadAllBytes(path);
-        Texture2D texture = new Texture2D(2, 2);
-        texture.LoadImage(fileData); // LoadImage overwrites the current texture with the image file data
-
-        return texture;
-    }
 }

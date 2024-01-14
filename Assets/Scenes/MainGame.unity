@@ -3506,7 +3506,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1054705959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6734,6 +6734,38 @@ PrefabInstance:
       propertyPath: PlayerHealthText
       value: 
       objectReference: {fileID: 651317440}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: RedCardHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 3409c10f1c4c65348a8dd060df87f02a, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: BlueCardHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 9928f35bf4376804db18becfcd245b83, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: GreyCardHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 1bcb80efb2141d14097c9047fd02105e, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: NoPlayerHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 9d02ba81107e32a46bf3a865a8b94cce, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: GreenCardHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 4603da1e293d3a044a11675034461fa8, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: RedPlayerHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 7a8fb2490f2de024ab0f4fb062d9f89d, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: BluePlayerHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 4589afb0704055948988e6b13930c80f, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: PurplePlayerHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 9fdc4d470455b6342830a0816a3b6b2a, type: 3}
     - target: {fileID: 5135091845981163631, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
       propertyPath: sceneId
       value: 545177264
