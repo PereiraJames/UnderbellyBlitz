@@ -309,7 +309,6 @@ public class CardDetails : NetworkBehaviour
         }
         else
         {
-            Debug.Log("off");
             cardHightlightImage.sprite = null;
             cardHightlightImage.enabled = false;
         }

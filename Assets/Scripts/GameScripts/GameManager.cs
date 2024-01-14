@@ -8,7 +8,7 @@ public class GameManager : NetworkBehaviour
     public UIManager UIManager;
     public GameObject PlayerSlot; 
     public PlayerManager PlayerManager;   
-    public string GameState = "Ready";
+    public string GameState = "End Turn";
     public int PlayerHealth = 20;
     public int EnemyHealth = 20;
 
@@ -37,7 +37,7 @@ public class GameManager : NetworkBehaviour
     void Start()
     {
         UIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
-        UIManager.UpdateButtonText(GameState); 
+        // UIManager.UpdateButtonText(GameState); 
         PlayerSlot = GameObject.Find("PlayerSlot");
 
         currentEnemyDoubloons = totalEnemyDoubloons;
@@ -85,8 +85,6 @@ public class GameManager : NetworkBehaviour
 
     public void EndTurn()
     {
-        UIManager.HighlightTurn();
-
         foreach (Transform child in PlayerSlot.GetComponentsInChildren<Transform>())
         {
             if (child.gameObject.tag == "Cards")
@@ -94,7 +92,8 @@ public class GameManager : NetworkBehaviour
                 child.GetComponent<CardDetails>().AttackTurn(true);
             }
         }        
-        
+
+        UIManager.HighlightTurn();
         currentPlayerDoubloons = totalPlayerDoubloons;
         currentEnemyDoubloons = totalEnemyDoubloons;
         UIManager.UpdatePlayerText();

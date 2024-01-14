@@ -31,11 +31,17 @@ public class UIManager : NetworkBehaviour
     public Sprite NoPlayerHighlight;
     public string NoPlayerHighlightPath = "Assets/Assets/NoPlayerEffect.png";
 
+    public Image PlayerHighlight;
+    public Image EnemyHighlight;
+
     void Start()
     {
         Canvas = GameObject.Find("Main Canvas");
         GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         UpdatePlayerText();
+
+        PlayerHighlight = GameObject.Find("PlayerHighlight").GetComponent<Image>();
+        EnemyHighlight = GameObject.Find("EnemyHighlight").GetComponent<Image>();
 
         Texture2D Blue = LoadTexture(BluePlayerHighlightPath);
         Texture2D Purple = LoadTexture(PurplePlayerHighlightPath);
@@ -101,8 +107,6 @@ public class UIManager : NetworkBehaviour
     public void HighlightTurn()
     {
         PlayerManager = NetworkClient.connection.identity.GetComponent<PlayerManager>();
-        Image PlayerHighlight = GameObject.Find("PlayerHighlight").GetComponent<Image>();
-        Image EnemyHighlight = GameObject.Find("EnemyHighlight").GetComponent<Image>();
             
         if (PlayerManager.IsMyTurn)
         {
@@ -112,8 +116,9 @@ public class UIManager : NetworkBehaviour
         }
         else
         {
-            PlayerHighlight.sprite = NoPlayerHighlight;
             EnemyHighlight.sprite = BluePlayerHighlight;
+            PlayerHighlight.sprite = NoPlayerHighlight;
+            
             Button.GetComponentInChildren<Text>().color = Color.gray;
         }
     }

@@ -450,8 +450,6 @@ public class PlayerManager : NetworkBehaviour
     {
         if(isOwned)
         {
-            Image PlayerHighlight = GameObject.Find("PlayerHighlight").GetComponent<Image>();
-            Image EnemyHighlight = GameObject.Find("EnemyHighlight").GetComponent<Image>();
            
             foreach (Transform child in EnemySlot.GetComponentsInChildren<Transform>())
             {
@@ -478,13 +476,13 @@ public class PlayerManager : NetworkBehaviour
 
                 
 
-                EnemyHighlight.sprite = UIManager.RedPlayerHighlight;
+                UIManager.EnemyHighlight.sprite = UIManager.RedPlayerHighlight;
                 AttackBeingMade = true;
                 AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOn();
             }
             else if (EnemyPlayedCards.Count == 0 && state == "OpenDisplay") // For attacking, if no minions - you have the option to attack enemy hero.
             {
-                EnemyHighlight.sprite = UIManager.RedPlayerHighlight;
+                UIManager.EnemyHighlight.sprite = UIManager.RedPlayerHighlight;
                 AttackDisplayOpened = true;
                 AttackBeingMade = true;
                 AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOn();
@@ -503,7 +501,11 @@ public class PlayerManager : NetworkBehaviour
                     card.GetComponent<CardDetails>().CardHighlight("red", false);
                     card.transform.SetParent(EnemySlot.transform, false);
                 }
-                EnemyHighlight.sprite = UIManager.NoPlayerHighlight;
+                if(UIManager.EnemyHighlight.sprite == UIManager.RedPlayerHighlight)
+                {
+                    UIManager.EnemyHighlight.sprite = UIManager.NoPlayerHighlight;
+                }
+                
                 Debug.Log("ClosedDisplay");
                 Debug.Log(AttackingTarget);
                 
@@ -815,9 +817,6 @@ public class PlayerManager : NetworkBehaviour
             PlayerCardHealth -= EnemyAttackDamage;
             EnemyCardHealth -= PlayerAttackDamage;
 
-            Debug.Log(AttackingTarget + " " + PlayerCardHealth);
-            Debug.Log(AttackedTarget + " " + EnemyCardHealth);
-
             AttackingTarget.GetComponent<CardAbilities>().OnHit();
             AttackedTarget.GetComponent<CardAbilities>().OnHit();
 
@@ -831,14 +830,12 @@ public class PlayerManager : NetworkBehaviour
             if(EnemyCardHealth < 1)
             {
                 AttackedTarget.GetComponent<CardZoom>().OnHoverExit();
-                Debug.Log("RPCardAttack(): " + gameObject);
                 AttackedTarget.GetComponent<CardAbilities>().OnLastResort();
                 Destroy(AttackedTarget);
             }
             if(PlayerCardHealth < 1)
             {
                 AttackingTarget.GetComponent<CardZoom>().OnHoverExit();
-                Debug.Log("RPCardAttack(): " + gameObject);
                 AttackingTarget.GetComponent<CardAbilities>().OnLastResort();
                 Destroy(AttackingTarget);
             }        
@@ -1134,7 +1131,6 @@ public class PlayerManager : NetworkBehaviour
         {
             for (int i = 0; i < amount; i ++)
             {
-                Debug.Log(PlayerArea.transform.childCount);
                 int ranNum = Random.Range(0,PlayerArea.transform.childCount);
                 int count = 0;
 
@@ -1144,7 +1140,6 @@ public class PlayerManager : NetworkBehaviour
                     {
                         if(count == ranNum)
                         {
-                            Debug.Log(child.gameObject);
                             CmdDiscardCards(child.gameObject);
                         }
                         count++;

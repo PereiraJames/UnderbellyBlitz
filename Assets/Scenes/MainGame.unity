@@ -2204,6 +2204,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 568377618}
   m_CullTransparentMesh: 1
+--- !u!1 &586563903 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2010314424466542230, guid: 60386adea3579424ea7f462e4ff05845, type: 3}
+  m_PrefabInstance: {fileID: 2092122412781173091}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &616570899 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1982001914790005267, guid: 31f0c7ee2d51d404590c4a6945c6ddfe, type: 3}
@@ -3422,7 +3427,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1054705959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6103,6 +6108,10 @@ PrefabInstance:
       propertyPath: sceneId
       value: 1449885553
       objectReference: {fileID: 0}
+    - target: {fileID: 786981708688090938, guid: 60386adea3579424ea7f462e4ff05845, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2010314424466542230, guid: 60386adea3579424ea7f462e4ff05845, type: 3}
       propertyPath: m_Name
       value: Button
@@ -6585,6 +6594,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: Button
+      value: 
+      objectReference: {fileID: 586563903}
     - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
       propertyPath: EnemyText
       value: 
