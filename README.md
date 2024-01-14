@@ -28,11 +28,9 @@ Objective of the Game: Bring your opponent to 0 HP or have the most Doubloons on
 
 Each player has a hand limit of 8 cards and are only allowed to have 8 cards in play/ on the board.
 
-![CardShot](https://github.com/PereiraJames/UnderbellyBlitz/assets/82026997/a31798c4-45a7-41d7-9be1-a8de39102731)
+# Card Layout
 
-1) Cards Damage amount
-2) Cards Health amount
-3) Cards Doubloon cost
+![CardDemo](https://github.com/PereiraJames/UnderbellyBlitz/assets/82026997/016411c6-b02b-41c4-97ff-0181c4ffd716)
 
 ![WholeScreenShot](https://github.com/PereiraJames/UnderbellyBlitz/assets/82026997/9c790cfe-8945-42a1-845e-8f495fa1b668)
 
