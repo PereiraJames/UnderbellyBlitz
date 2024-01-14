@@ -450,6 +450,9 @@ public class PlayerManager : NetworkBehaviour
     {
         if(isOwned)
         {
+            Image PlayerHighlight = GameObject.Find("PlayerHighlight").GetComponent<Image>();
+            Image EnemyHighlight = GameObject.Find("EnemyHighlight").GetComponent<Image>();
+           
             foreach (Transform child in EnemySlot.GetComponentsInChildren<Transform>())
             {
                 if(child.gameObject.tag == "Cards")
@@ -472,11 +475,16 @@ public class PlayerManager : NetworkBehaviour
                 {
                     Debug.Log("EnemyPlayedCards is empty");
                 }
+
+                
+
+                EnemyHighlight.sprite = UIManager.RedPlayerHighlight;
                 AttackBeingMade = true;
                 AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOn();
             }
             else if (EnemyPlayedCards.Count == 0 && state == "OpenDisplay") // For attacking, if no minions - you have the option to attack enemy hero.
             {
+                EnemyHighlight.sprite = UIManager.RedPlayerHighlight;
                 AttackDisplayOpened = true;
                 AttackBeingMade = true;
                 AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOn();
@@ -495,6 +503,7 @@ public class PlayerManager : NetworkBehaviour
                     card.GetComponent<CardDetails>().CardHighlight("red", false);
                     card.transform.SetParent(EnemySlot.transform, false);
                 }
+                EnemyHighlight.sprite = UIManager.NoPlayerHighlight;
                 Debug.Log("ClosedDisplay");
                 Debug.Log(AttackingTarget);
                 
@@ -839,6 +848,7 @@ public class PlayerManager : NetworkBehaviour
         else
         {
             CmdGMEnemyHealth(-PlayerAttackDamage);
+            AttackingTarget.GetComponent<CardDetails>().AttackTurn(false);
         }
 
         

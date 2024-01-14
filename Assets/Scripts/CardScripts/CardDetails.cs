@@ -171,7 +171,7 @@ public class CardDetails : NetworkBehaviour
         {
             if (!PlayerManager.AttackBeingMade) //checks if attack is currently being made
             {   
-                if(transform.parent == RectPlayerSlot) //This checks if card is in the PlayerSlot
+                if(transform.parent == RectPlayerSlot  && gameObject.GetComponent<CardDetails>().CurrentCardAttack > 0) //This checks if card is in the PlayerSlot
                 {
                     PlayerManager.CmdAttackingDetails(gameObject, 0);
                     PlayerManager.CmdShowAttackDisplay("OpenDisplay");

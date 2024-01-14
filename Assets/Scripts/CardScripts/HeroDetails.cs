@@ -40,6 +40,11 @@ public class HeroDetails : NetworkBehaviour
             }
         }
     }
+
+    public void SetHighlightSprite()
+    {
+        
+    }
     
     public void OnHeroPowerHover()
     {

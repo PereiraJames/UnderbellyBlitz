@@ -117,11 +117,6 @@ public class GameManager : NetworkBehaviour
 
     public void UpdateDoubloons(int amount, bool isOwned, bool stealing)
     {
-        if (TotalDoubloons < 1)
-        {
-            return;
-        }
-
         if(amount >= TotalDoubloons)
         {
             amount = TotalDoubloons;
@@ -154,6 +149,34 @@ public class GameManager : NetworkBehaviour
         }
 
         UIManager.UpdatePlayerText();
+
+        if(TotalDoubloons < 1)
+        {
+            if(isOwned)
+            {
+                if(totalEnemyDoubloons > totalPlayerDoubloons)
+                {
+                    UIManager.DisplayWin(false);
+                }
+                else
+                {
+                    UIManager.DisplayWin(true);
+                }
+            }
+            else
+            {
+                if(totalEnemyDoubloons > totalPlayerDoubloons)
+                {
+                    UIManager.DisplayWin(false);
+                }
+                else
+                {
+                    UIManager.DisplayWin(true);
+                }
+            }
+        }
+
+        
     }
 
     public void SetPlayerHealth(int health, bool isOwned)
