@@ -6,14 +6,23 @@ This my Unity/C# developed game using the Mirror Network Framework. It is a typi
 
 The main structure of the game is deployed but improvements and additional features are still being added.
 
+For online multiplayer (Still Work in Progress), I am using FizzSteamworks to connect to the Steam API to allow Steam to host the server.
+
 ## Installation:
 
 Install Game - {}
 
 Run the "CardGame.exe" file.
 
-Due it has only been set-up as a local host multiplayer game, you will need to open two windows of the game to play. Essentially playing both sides of the game.
+Currently it has only been set-up as a local host multiplayer game, you will need to open two windows of the game to play. Essentially playing both sides of the game.
 Implementation of online multiplayer in the works.
+
+# For LocalHosting
+You will need to open two windows of the game to play. Essentially playing on both sides of the game.
+
+# For SteamHosting
+**Note that this is slightly buggy**
+Click the "Steam Host" button, and have 1 of the 2 participating players click host. Have the second player join the game through a Steam invite or "Join The Game" function that steam provides.
 
 ## How To Play:
 Each Player will connect to the same Server. Meaning one player will need to Host, whilst the second joins them.
