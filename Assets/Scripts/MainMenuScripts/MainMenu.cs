@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
 
     public void LoadLocalHost()
     {
-        SceneManager.LoadScene("LocalHostGame");
+        SceneManager.LoadScene("MainGame");
     }
 
     public void QuitGame()
