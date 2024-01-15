@@ -781,14 +781,7 @@ public class PlayerManager : NetworkBehaviour
         int currentCardHealth = card.GetComponent<CardDetails>().GetCardHealth();
         int MaxCardHealth = card.GetComponent<CardDetails>().GetMaxCardHealth();
 
-        if(newHealth - MaxCardHealth <= 0)
-        {
-            CmdDestroyTarget(card);
-        }
-        else
-        {
-            card.GetComponent<CardDetails>().PermSetCardHealth(newHealth);
-        }
+        card.GetComponent<CardDetails>().PermSetCardHealth(newHealth);
     }
 
     [Command]

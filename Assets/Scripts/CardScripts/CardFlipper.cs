@@ -28,12 +28,33 @@ public class CardFlipper : MonoBehaviour
         if (gameObject.GetComponent<Image>().sprite == CardFront)
         {
             gameObject.GetComponent<Image>().sprite = CardBack;
-            gameObject.GetComponentInChildren<Text>().enabled = false;
+            // gameObject.GetComponentInChildren<Text>().enabled = false;
+            foreach(Transform child in gameObject.GetComponentsInChildren<Transform>())
+            {
+                if(child.gameObject.tag != "Cards")
+                {
+                    if(child.gameObject.GetComponentInChildren<Text>() != null)
+                    {
+                        child.gameObject.GetComponentInChildren<Text>().enabled = false;
+                    }
+                }
+                
+            }
         }
         else
         {
             gameObject.GetComponent<Image>().sprite = CardFront;
-            gameObject.GetComponentInChildren<Text>().enabled = true;
+            foreach(Transform child in gameObject.GetComponentsInChildren<Transform>())
+            {
+                if(child.gameObject.tag != "Cards")
+                {
+                    if(child.gameObject.GetComponentInChildren<Text>() != null)
+                    {
+                        child.gameObject.GetComponentInChildren<Text>().enabled = true;
+                    }
+                }
+            }
+            // gameObject.GetComponentInChildren<Text>().enabled = true;
         }
     }
 }

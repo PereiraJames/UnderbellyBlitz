@@ -25,7 +25,7 @@ public class DebugLogDisplay : MonoBehaviour
 
     void OnGUI()
     {
-        GUI.Label(new Rect(150, 5, 800,60), output);
+        GUI.Label(new Rect(150, 40, 800,60), output);
         GUI.Label(new Rect(150, 65, 800, 60), stack);
     }
 }

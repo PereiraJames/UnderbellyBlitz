@@ -199,6 +199,7 @@ MonoBehaviour:
   RedHightlight: {fileID: 21300000, guid: 3409c10f1c4c65348a8dd060df87f02a, type: 3}
   BlueHighlight: {fileID: 21300000, guid: 9928f35bf4376804db18becfcd245b83, type: 3}
   GreenHighlight: {fileID: 21300000, guid: 4603da1e293d3a044a11675034461fa8, type: 3}
+  GreyHighlight: {fileID: 0}
   amountOfEachCard: 2
   DoubloonCost: 3
   MaxCardAttack: 2

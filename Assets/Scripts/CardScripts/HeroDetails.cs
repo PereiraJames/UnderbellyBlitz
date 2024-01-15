@@ -119,12 +119,12 @@ public class HeroDetails : NetworkBehaviour
             }
             else if (DeckTag == "Mark")
             {
-                PlayerManager.CmdDealCards(1, GameManager.PlayerDeck);
+                PlayerManager.CmdGMPlayerHealth(2);
                 HeroPowerInactive(heroPowerCost);
             }
             else if (DeckTag == "Chris")
             {
-                PlayerManager.CmdGMPlayerHealth(2);
+                PlayerManager.CmdDealCards(1, GameManager.PlayerDeck);
                 HeroPowerInactive(heroPowerCost);
             }
             else if (DeckTag == "Deion")
