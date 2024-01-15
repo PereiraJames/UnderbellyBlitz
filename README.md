@@ -14,14 +14,12 @@ Install Game - {}
 
 Run the "CardGame.exe" file.
 
-Currently it has only been set-up as a local host multiplayer game, you will need to open two windows of the game to play. Essentially playing both sides of the game.
-Implementation of online multiplayer in the works.
-
-# For LocalHosting
+## For LocalHosting
 You will need to open two windows of the game to play. Essentially playing on both sides of the game.
 
-# For SteamHosting
-**Note that this is slightly buggy**
+## For SteamHosting
+**Note that this is slightly buggy. It is still WIP**
+
 Click the "Steam Host" button, and have 1 of the 2 participating players click host. Have the second player join the game through a Steam invite or "Join The Game" function that steam provides.
 
 ## How To Play:
@@ -47,7 +45,8 @@ Play cards by dragging and dropping.
 ## Card Mechanics:
 1) Last Resort - Right before the card dies, it activates the ability.
 2) Warcry - When the card enters play, it activates the ability.
-3) End of Turn - When you end your turn, it activates the ability.
+3) Start of Turn - When you begin your turn, it activates the ability.
+4) End of Turn - When you end your turn, it activates the ability.
 
 ## Features to be added:
 1) Card Animations
