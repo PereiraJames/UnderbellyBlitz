@@ -639,7 +639,7 @@ GameObject:
   - component: {fileID: 131776986}
   - component: {fileID: 131776985}
   m_Layer: 5
-  m_Name: HealthImage
+  m_Name: PlayerHealthImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -714,7 +714,7 @@ GameObject:
   - component: {fileID: 148202699}
   - component: {fileID: 148202698}
   m_Layer: 5
-  m_Name: DoubloonImage
+  m_Name: PlayerDoubloonImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5163,7 +5163,7 @@ GameObject:
   - component: {fileID: 1523346712}
   - component: {fileID: 1523346711}
   m_Layer: 5
-  m_Name: HealthImage
+  m_Name: EnemyHealthImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5249,7 +5249,7 @@ GameObject:
   - component: {fileID: 1589386158}
   - component: {fileID: 1589386157}
   m_Layer: 5
-  m_Name: DoubloonImage
+  m_Name: EnemyDoubloonImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6842,6 +6842,10 @@ PrefabInstance:
       propertyPath: PurplePlayerHighlight
       value: 
       objectReference: {fileID: 21300000, guid: 9fdc4d470455b6342830a0816a3b6b2a, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: DamagedPlayerHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 98a64b278ac62a94a89fa1a3866e51d8, type: 3}
     - target: {fileID: 5135091845981163631, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
       propertyPath: sceneId
       value: 545177264

@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainGame.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/SteamGame.unity
-    guid: 4e50bac8fbfd86d41b599080c1a5d5b3
+    path: Assets/Scenes/SteamGameNew.unity
+    guid: 596588d638032fe4a8c27e666ec724d1
   m_configObjects: {}

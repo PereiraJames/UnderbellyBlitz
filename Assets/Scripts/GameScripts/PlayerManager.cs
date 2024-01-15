@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Mirror;
+using Steamworks;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -74,6 +75,11 @@ public class PlayerManager : NetworkBehaviour
 
     [SyncVar]
     public List <GameObject> DeionDeck = new List<GameObject>();
+
+    private void HandleServerStarted()
+    {
+        Debug.Log("Server Started");
+    }
 
     public override void OnStartClient()
     {
@@ -300,26 +306,32 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     void RpcSetParentCard(GameObject card)
     {
-        if(isOwned)
+        if(card != null)
         {
-            card.transform.SetParent(PlayerArea.transform, false);
-            card.GetComponent<CardDetails>().inHand = true;
-            GameManager.PlayerDeckSize --;
-            GameManager.PlayerHandSize ++;
-        }
-        else
-        {
-            card.transform.SetParent(EnemyArea.transform, false);
-            card.GetComponent<CardFlipper>().Flip();
-            GameManager.EnemyDeckSize --;
-            GameManager.EnemyHandSize ++;
+            if(isOwned)
+            {
+                card.transform.SetParent(PlayerArea.transform, false);
+                card.GetComponent<CardDetails>().inHand = true;
+                GameManager.PlayerDeckSize --;
+                GameManager.PlayerHandSize ++;
+            }
+            else
+            {
+                card.transform.SetParent(EnemyArea.transform, false);
+                card.GetComponent<CardFlipper>().Flip();
+                GameManager.EnemyDeckSize --;
+                GameManager.EnemyHandSize ++;
+            }
         }
     }
 
     [Command]
     public void CmdCardSleep(bool CanAttack, GameObject card)
     {
-        RpcCardSleep(CanAttack, card);
+        if(card != null)
+        {
+            RpcCardSleep(CanAttack, card);
+        }
     }
 
     [ClientRpc]
@@ -589,7 +601,6 @@ public class PlayerManager : NetworkBehaviour
 
     }
 
-
     [Command]
     void CmdGMCardPlayed()
     {
@@ -696,12 +707,16 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdDealDamage(GameObject Target, int Damage)
     {
-        RpcDealDamage(Target, Damage);
+        if(Target != null)
+        {
+            RpcDealDamage(Target, Damage);
+        }
     }
 
     [ClientRpc]
     public void RpcDealDamage(GameObject Target, int Damage)
     {
+        if(Target == null) {return;}
         Target.GetComponent<CardDetails>().SetCardHealth(Damage);
 
         int TargetHealth = Target.GetComponent<CardDetails>().GetCardHealth();
@@ -723,12 +738,14 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdDestroyTarget(GameObject Target)
     {
+        if(Target == null) {return;}
         RpcDestoryTarget(Target);
     }
 
     [ClientRpc]
     public void RpcDestoryTarget(GameObject Target)
     {
+        if(Target == null) {return;}
         Target.GetComponent<CardZoom>().OnHoverExit();
         Debug.Log("RPCDestoryTarget: " + Target);
         Target.GetComponent<CardAbilities>().OnLastResort();
@@ -751,12 +768,14 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdAttackingDetails(GameObject target, int targetNum)
     {
+        if(target == null) {return;}
         RpcAttackingDetails(target, targetNum);
     }
 
     [ClientRpc]
     public void RpcAttackingDetails(GameObject target, int targetNum)
     {
+        if(target == null) {return;}
         if(targetNum == 1)
         {
             AttackedTarget = target;
@@ -774,12 +793,14 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdPermSetCardHealth(GameObject card, int newHealth)
     {
+        if(card == null) {return;}
         RpcPermSetCardHealth(card, newHealth);
     }
 
     [ClientRpc]
     public void RpcPermSetCardHealth(GameObject card, int newHealth)
     {
+        if(card == null) {return;}
         int currentCardHealth = card.GetComponent<CardDetails>().GetCardHealth();
         int MaxCardHealth = card.GetComponent<CardDetails>().GetMaxCardHealth();
 
@@ -860,43 +881,47 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdCardHighlight(string color, bool On, GameObject card)
     {
+        if(card == null) {return;}
         RpcCardHighlight(color, On, card);
     }
 
     [ClientRpc]
     public void RpcCardHighlight(string color, bool On, GameObject card)
     {   
-        CardDetails cardDetails = card.GetComponent<CardDetails>();
-        if(On)
+
+        if(card != null)
         {
-            cardDetails.cardHighlightImage.enabled = true;
-            if(color == "blue")
+            CardDetails cardDetails = card.GetComponent<CardDetails>();
+            if(On)
             {
-                cardDetails.cardHighlightImage.sprite = cardDetails.BlueHighlight;
+                cardDetails.cardHighlightImage.enabled = true;
+                if(color == "blue")
+                {
+                    cardDetails.cardHighlightImage.sprite = cardDetails.BlueHighlight;
+                }
+                else if (color == "red")
+                {
+                    cardDetails.cardHighlightImage.sprite = cardDetails.RedHightlight;
+                }
+                else if (color == "green")
+                {
+                    cardDetails.cardHighlightImage.sprite = cardDetails.GreenHighlight;
+                }
+                else if(color == "grey")
+                {
+                    cardDetails.cardHighlightImage.sprite = cardDetails.GreyHighlight;
+                }
+                else if(color == "purple")
+                {
+                    cardDetails.cardHighlightImage.sprite = cardDetails.PurpleHighlight;
+                }
             }
-            else if (color == "red")
+            else
             {
-                cardDetails.cardHighlightImage.sprite = cardDetails.RedHightlight;
+                cardDetails.cardHighlightImage.sprite = cardDetails.NoHightlight;
+                cardDetails.cardHighlightImage.enabled = false;
             }
-            else if (color == "green")
-            {
-                cardDetails.cardHighlightImage.sprite = cardDetails.GreenHighlight;
-            }
-            else if(color == "grey")
-            {
-                cardDetails.cardHighlightImage.sprite = cardDetails.GreyHighlight;
-            }
-            else if(color == "purple")
-            {
-                cardDetails.cardHighlightImage.sprite = cardDetails.PurpleHighlight;
-            }
-        }
-        else
-        {
-            cardDetails.cardHighlightImage.sprite = cardDetails.NoHightlight;
-            cardDetails.cardHighlightImage.enabled = false;
-        }
-        
+        }        
     }
 
     [Command]
@@ -963,6 +988,7 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdCardSpecial(GameObject card)
     {
+        if(card == null) {return;}
         RpcCardSpecial(card);
     }
 
@@ -981,24 +1007,14 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void RpcUpdateDoubloons(int amount, bool stealing)
     {
+        CmdHeroItemAnimation(true, "doubloon");
         GameManager.UpdateDoubloons(amount, isOwned, stealing);
-    }
-
-    [Command]
-    public void CmdChangeBP(int playerBp, int enemyBp)
-    {
-        RpcChangeBP(playerBp, enemyBp);
-    }
-
-    [ClientRpc]
-    public void RpcChangeBP(int playerBp, int enemyBp)
-    {
-        GameManager.ChangeBP(playerBp, enemyBp, isOwned);
     }
 
     [Command]
     public void CmdCardStatChange(int attack, int health, GameObject card)
     {
+        if(card == null) {return;}
         RpcCardStatChange(attack, health, card);
     }
 
@@ -1018,6 +1034,7 @@ public class PlayerManager : NetworkBehaviour
 
             card.GetComponent<CardDetails>().SetCardHealth(health);
             card.GetComponent<CardDetails>().ChangeCardAttack(attack);
+            CmdCardEffect(card);
             CmdUpdateAllCardText();
         }
     }
@@ -1025,6 +1042,7 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdSetCardStats(int attack, int health, GameObject card)
     {
+        if(card == null) {return;}
         RpcSetCardStats(attack,health,card);
     }
 
@@ -1037,6 +1055,7 @@ public class PlayerManager : NetworkBehaviour
             card.GetComponent<CardDetails>().MaxCardHealth = health;
             card.GetComponent<CardDetails>().CurrentCardAttack = attack;
             card.GetComponent<CardDetails>().CurrentCardHealth = health;
+            CmdCardEffect(card);
         }
     }
 
@@ -1062,6 +1081,7 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void RpcGMPlayerHealth(int health)
     {
+        CmdHeroItemAnimation(true, "health");
         GameManager.AdjustPlayerHealth(health, isOwned);
     }
 
@@ -1074,6 +1094,7 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void RpcGMPEnemyHealth(int health)
     {
+        CmdHeroItemAnimation(false, "health");
         GameManager.AdjustEnemyHealth(health, isOwned);
     }
 
@@ -1106,6 +1127,7 @@ public class PlayerManager : NetworkBehaviour
     [Server]
     public void GiveOtherPlayerAuthority(GameObject card)
     { 
+        if(card == null) {return;}
         NetworkIdentity objNetworkIdentity = card.GetComponent<NetworkIdentity>();
 
         if (objNetworkIdentity.isOwned)
@@ -1148,6 +1170,7 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void RpcSummonMinion(int health, int attack, bool forPlayer, GameObject card)
     {
+        if(card == null) {return;}
         if(!forPlayer)
         {
             GiveOtherPlayerAuthority(card);
@@ -1201,7 +1224,7 @@ public class PlayerManager : NetworkBehaviour
     }
 
     public bool AbleToPlaceCard(GameObject Slot)
-    {
+    {        
         int count = 0;
         if(Slot.gameObject.name == "EnemySlot")
         {
@@ -1261,12 +1284,121 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdDiscardCards(GameObject card)
     {
+        if(card == null) {return;}
         RpcDiscardCards(card);
     }
 
     [ClientRpc]
     public void RpcDiscardCards(GameObject card)
     {
+        if(card == null) {return;}
         Destroy(card);
     }
+
+
+    //ANIMATIONS
+
+    [Command]
+    public void CmdHeroItemAnimation(bool forPlayer, string item)
+    {
+        RpcHeroItemAnimation(forPlayer, item);
+    }
+
+    [ClientRpc]
+    public void RpcHeroItemAnimation(bool forPlayer, string item)
+    {
+        GameObject TargetImage = null;
+        float animationDuration = 0.3f;
+
+        if(isOwned)
+        {
+            if(forPlayer)
+            {
+                if(item == "health")
+                {
+                    TargetImage = GameObject.Find("PlayerHealthImage");
+                }
+                else if(item == "doubloon")
+                {
+                    TargetImage = GameObject.Find("PlayerDoubloonImage");
+                }
+            }
+            else
+            {
+                if(item == "health")
+                {
+                    TargetImage = GameObject.Find("EnemyHealthImage");
+                }
+                else if(item == "doubloon")
+                {
+                    TargetImage = GameObject.Find("EnemyDoubloonImage");
+                }
+            }
+        }
+        else
+        {
+            if(forPlayer)
+            {
+                if(item == "health")
+                {
+                    TargetImage = GameObject.Find("EnemyHealthImage");
+                }
+                else if(item == "doubloon")
+                {
+                    TargetImage = GameObject.Find("EnemyDoubloonImage");
+                }
+            }
+            else
+            {
+                if(item == "health")
+                {
+                    TargetImage = GameObject.Find("PlayerHealthImage");
+                }
+                else if(item == "doubloon")
+                {
+                    TargetImage = GameObject.Find("PlayerDoubloonImage");
+                }
+            }
+        }
+
+        if(TargetImage != null)
+        {
+            LeanTween.scale(TargetImage, new Vector3(1.2f, 1.2f, 1f), animationDuration)
+            .setEase(LeanTweenType.easeOutQuad)
+            .setOnComplete(() =>
+            {
+                // After the scale-up animation, start the scale-down animation
+                LeanTween.scale(TargetImage, new Vector3(1f, 1f, 1f), animationDuration)
+                    .setEase(LeanTweenType.easeOutQuad);
+            });
+        }
+        else
+        {
+            Debug.Log(TargetImage);
+        }
+    }
+
+    [Command]
+    public void CmdCardEffect(GameObject card)
+    {
+        RpcCardEffect(card);
+    }
+
+    [ClientRpc]
+    public void RpcCardEffect(GameObject card)
+    {
+        float animationDuration = 0.3f;
+        CmdCardHighlight("green", true, card);
+        LeanTween.scale(card, new Vector3(1.2f, 1.2f, 1f), animationDuration)
+            .setEase(LeanTweenType.easeOutQuad)
+            .setOnComplete(() =>
+            {
+                // After the scale-up animation, start the scale-down animation
+                LeanTween.scale(card, new Vector3(1f, 1f, 1f), animationDuration)
+                    .setEase(LeanTweenType.easeOutQuad);
+            });
+        CmdCardHighlight("noeffect", false, card);
+    }
+
+    //ANIMATIONS
 }

@@ -27,6 +27,7 @@ public class UIManager : NetworkBehaviour
     public Sprite PurplePlayerHighlight;
     public Sprite NoPlayerHighlight;
     public Sprite PlayerTurnHighlight;
+    public Sprite DamagedPlayerHighlight;
 
     public Sprite RedCardHighlight;
     public Sprite BlueCardHighlight;
