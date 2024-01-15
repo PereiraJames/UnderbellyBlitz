@@ -10,9 +10,9 @@ For online multiplayer (Still Work in Progress), I am using FizzSteamworks to co
 
 ## Installation:
 
-Install Game - {}
+Download the "UnderBellyBlitzBuild" file.
 
-Run the "CardGame.exe" file.
+Unzip and Run the "CardGame.exe" file.
 
 ## For LocalHosting
 You will need to open two windows of the game to play. Essentially playing on both sides of the game.
