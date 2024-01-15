@@ -29,17 +29,9 @@ Objective of the Game: Bring your opponent to 0 HP or have the most Doubloons on
 Each player has a hand limit of 8 cards and are only allowed to have 8 cards in play/ on the board.
 
 # Card Layout
-
-![CardDemo](https://github.com/PereiraJames/UnderbellyBlitz/assets/82026997/016411c6-b02b-41c4-97ff-0181c4ffd716)
-
-![WholeScreenShot](https://github.com/PereiraJames/UnderbellyBlitz/assets/82026997/9c790cfe-8945-42a1-845e-8f495fa1b668)
-
-1) Heros Health
-2) Heros Doubloon Amount
-3) Enemy Health
-4) Enemy Doubloon Amount
-5) Community Doubloons
-6) End Turn button
+![CardDemo](https://github.com/PereiraJames/UnderbellyBlitz/assets/82026997/e30bc50c-c330-45b3-87b3-1a637ee9f7b8)
+# Map Layout
+![MapLayout](https://github.com/PereiraJames/UnderbellyBlitz/assets/82026997/0fed473c-1286-4481-af5d-0de415234552)
 
 Play cards by dragging and dropping.
 
@@ -53,3 +45,6 @@ Play cards by dragging and dropping.
 2) More Card Mechanics
 3) Chat Box
 4) Improvement to UI/UX design
+5) Rematch Option
+
+
