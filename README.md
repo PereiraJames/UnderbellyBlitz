@@ -9,10 +9,14 @@ The main structure of the game is deployed but improvements and additional featu
 For online multiplayer (Still Work in Progress), I am using FizzSteamworks to connect to the Steam API to allow Steam to host the server.
 
 ## Installation:
+Download the Game via: https://drive.google.com/drive/folders/1eeqELKqXO4VPk9QmDqMBU-EygKXegKI0?usp=sharing
 
 Download the "UnderBellyBlitzBuild" file.
 
 Unzip and Run the "CardGame.exe" file.
+
+For SteamHosting:
+Be sure to add the game to the steam launcher as a "Non-Steam Game".
 
 ## For LocalHosting
 You will need to open two windows of the game to play. Essentially playing on both sides of the game.
