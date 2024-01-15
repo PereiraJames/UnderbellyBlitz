@@ -466,7 +466,8 @@ public class PlayerManager : NetworkBehaviour
                 {
                     foreach (GameObject card in EnemyPlayedCards)
                     {
-                        card.GetComponent<CardDetails>().CardHighlight("red", true);
+                        // card.GetComponent<CardDetails>().CardHighlight("red", true);
+                        CmdCardHighlight("red", true, card);
                     }
                 }
                 else
@@ -476,13 +477,13 @@ public class PlayerManager : NetworkBehaviour
 
                 
 
-                UIManager.EnemyHighlight.sprite = UIManager.RedPlayerHighlight;
+                CmdHighlightHero("red", true, false);
                 AttackBeingMade = true;
                 AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOn();
             }
             else if (EnemyPlayedCards.Count == 0 && state == "OpenDisplay") // For attacking, if no minions - you have the option to attack enemy hero.
             {
-                UIManager.EnemyHighlight.sprite = UIManager.RedPlayerHighlight;
+                CmdHighlightHero("red", true, false);
                 AttackDisplayOpened = true;
                 AttackBeingMade = true;
                 AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOn();
@@ -498,12 +499,13 @@ public class PlayerManager : NetworkBehaviour
                 }
                 foreach (GameObject card in EnemyPlayedCards)
                 {
-                    card.GetComponent<CardDetails>().CardHighlight("red", false);
+                    // card.GetComponent<CardDetails>().CardHighlight("red", false);
+                    CmdCardHighlight("red", false, card);
                     card.transform.SetParent(EnemySlot.transform, false);
                 }
-                if(UIManager.EnemyHighlight.sprite == UIManager.RedPlayerHighlight)
+                if(UIManager.EnemyHighlight.sprite == UIManager.RedPlayerHighlight || UIManager.EnemyHighlight.sprite == UIManager.PurplePlayerHighlight)
                 {
-                    UIManager.EnemyHighlight.sprite = UIManager.NoPlayerHighlight;
+                    CmdHighlightHero("red", false, false);
                 }
                 
                 Debug.Log("ClosedDisplay");
@@ -783,12 +785,126 @@ public class PlayerManager : NetworkBehaviour
 
         card.GetComponent<CardDetails>().PermSetCardHealth(newHealth);
     }
+   
+    [Command]
+    public void CmdHighlightHero(string color, bool On, bool forPlayer)
+    {
+        RpcHighlightHero(color, On, forPlayer);
+    }
+
+    [ClientRpc]
+    public void RpcHighlightHero(string color, bool On, bool forPlayer)
+    {
+        Image TargetImage;
+        if(isOwned)
+        {
+            if(forPlayer)
+            {
+                TargetImage = UIManager.PlayerHighlight;
+            }
+            else
+            {
+                TargetImage = UIManager.EnemyHighlight;
+            }
+        }
+        else
+        {
+            if(forPlayer)
+            {
+                TargetImage = UIManager.EnemyHighlight;
+            }
+            else
+            {
+                TargetImage = UIManager.PlayerHighlight;
+            }
+        }
+        
+
+        if(On)
+        {
+            if(color == "turn")
+            {
+                TargetImage.sprite = UIManager.PlayerTurnHighlight;
+            }
+            else if(color == "blue")
+            {
+                TargetImage.sprite = UIManager.BluePlayerHighlight;
+            }
+            else if (color == "red")
+            {
+                TargetImage.sprite = UIManager.RedPlayerHighlight;
+            }
+            else if (color == "green")
+            {
+                // TargetImage.sprite = UIManager.Gree;
+            }
+            else if(color == "grey")
+            {
+                // TargetImage.sprite = UIManager.RedPlayerHighlight;
+            }
+            else if(color == "purple")
+            {
+                TargetImage.sprite = UIManager.PurplePlayerHighlight;
+            }
+            else
+            {
+                TargetImage.sprite = UIManager.NoPlayerHighlight;
+            }
+        }
+        else
+        {
+            TargetImage.sprite = TargetImage.sprite = UIManager.NoPlayerHighlight;
+        }
+    }
+
+    [Command]
+    public void CmdCardHighlight(string color, bool On, GameObject card)
+    {
+        RpcCardHighlight(color, On, card);
+    }
+
+    [ClientRpc]
+    public void RpcCardHighlight(string color, bool On, GameObject card)
+    {   
+        CardDetails cardDetails = card.GetComponent<CardDetails>();
+        if(On)
+        {
+            cardDetails.cardHighlightImage.enabled = true;
+            if(color == "blue")
+            {
+                cardDetails.cardHighlightImage.sprite = cardDetails.BlueHighlight;
+            }
+            else if (color == "red")
+            {
+                cardDetails.cardHighlightImage.sprite = cardDetails.RedHightlight;
+            }
+            else if (color == "green")
+            {
+                cardDetails.cardHighlightImage.sprite = cardDetails.GreenHighlight;
+            }
+            else if(color == "grey")
+            {
+                cardDetails.cardHighlightImage.sprite = cardDetails.GreyHighlight;
+            }
+            else if(color == "purple")
+            {
+                cardDetails.cardHighlightImage.sprite = cardDetails.PurpleHighlight;
+            }
+        }
+        else
+        {
+            cardDetails.cardHighlightImage.sprite = cardDetails.NoHightlight;
+            cardDetails.cardHighlightImage.enabled = false;
+        }
+        
+    }
 
     [Command]
     public void CmdCardAttack()
     {
         RpcCardAttack();
     }
+
 
     [ClientRpc]
     public void RpcCardAttack()

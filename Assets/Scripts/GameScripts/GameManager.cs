@@ -24,7 +24,7 @@ public class GameManager : NetworkBehaviour
     public int EnemyDeckSize = 0;
     public int PlayerDeckSize = 0;
 
-    public int TotalDoubloons = 20;
+    public int TotalDoubloons = 30;
 
     private int ReadyClicks = 0;
 

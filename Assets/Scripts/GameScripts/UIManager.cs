@@ -26,11 +26,14 @@ public class UIManager : NetworkBehaviour
     public Sprite BluePlayerHighlight;
     public Sprite PurplePlayerHighlight;
     public Sprite NoPlayerHighlight;
+    public Sprite PlayerTurnHighlight;
 
     public Sprite RedCardHighlight;
     public Sprite BlueCardHighlight;
     public Sprite GreenCardHighlight;
     public Sprite GreyCardHighlight;
+    public Sprite PurpleCardHighlight;
+    public Sprite NoCardHighlight;
 
     public Image PlayerHighlight;
     public Image EnemyHighlight;
@@ -101,13 +104,13 @@ public class UIManager : NetworkBehaviour
             
         if (PlayerManager.IsMyTurn)
         {
-            PlayerHighlight.sprite = BluePlayerHighlight;
+            PlayerHighlight.sprite = PlayerTurnHighlight;
             EnemyHighlight.sprite = NoPlayerHighlight;
             Button.GetComponentInChildren<Text>().color = Color.white;
         }
         else
         {
-            EnemyHighlight.sprite = BluePlayerHighlight;
+            EnemyHighlight.sprite = PlayerTurnHighlight;
             PlayerHighlight.sprite = NoPlayerHighlight;
             
             Button.GetComponentInChildren<Text>().color = Color.gray;

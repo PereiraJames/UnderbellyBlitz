@@ -424,6 +424,38 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4355759}
+          m_TargetAssemblyTypeName: HeroDetails, Assembly-CSharp
+          m_MethodName: OnHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 4355759}
+          m_TargetAssemblyTypeName: HeroDetails, Assembly-CSharp
+          m_MethodName: OnHoverExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &4355759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5760,6 +5792,38 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1875626442}
+          m_TargetAssemblyTypeName: HeroDetails, Assembly-CSharp
+          m_MethodName: OnHover
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1875626442}
+          m_TargetAssemblyTypeName: HeroDetails, Assembly-CSharp
+          m_MethodName: OnHoverExit
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1875626442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6731,6 +6795,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 694373480}
     - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: NoCardHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 7fbb52f066e32374fbfb1897f1cebc65, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
       propertyPath: PlayerHealthText
       value: 
       objectReference: {fileID: 651317440}
@@ -6762,6 +6830,14 @@ PrefabInstance:
       propertyPath: BluePlayerHighlight
       value: 
       objectReference: {fileID: 21300000, guid: 4589afb0704055948988e6b13930c80f, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: PlayerTurnHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 3125b73de1b912544a3457fdc894e607, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: PurpleCardHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 49bae08cf154cb145bfdb74db4703cf7, type: 3}
     - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
       propertyPath: PurplePlayerHighlight
       value: 

@@ -23,9 +23,11 @@ public class CardDetails : NetworkBehaviour
     public Sprite BlueHighlight;
     public Sprite GreenHighlight;
     public Sprite GreyHighlight;
+    public Sprite PurpleHighlight;
+    public Sprite NoHightlight;
 
 
-    private Image cardHightlightImage;
+    public Image cardHighlightImage;
 
     public int amountOfEachCard = 1;
     public int DoubloonCost = 1;
@@ -63,16 +65,17 @@ public class CardDetails : NetworkBehaviour
         BlueHighlight = UIManager.BlueCardHighlight;
         GreenHighlight = UIManager.GreenCardHighlight;
         GreyHighlight = UIManager.GreyCardHighlight;
+        PurpleHighlight = UIManager.PurpleCardHighlight;
 
         foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
         {
             if (child.gameObject.name == "CardHighlight")
             {
-                cardHightlightImage = child.GetComponent<Image>();
+                cardHighlightImage = child.GetComponent<Image>();
             }
         }
 
-        cardHightlightImage.sprite = null;
+        cardHighlightImage.sprite = NoHightlight;
 
         UpdateCardText();
     }
@@ -230,44 +233,113 @@ public class CardDetails : NetworkBehaviour
 
     public void CardHover()
     {   
-        if(isOwned && cardHightlightImage.sprite == null)
+        if(PlayerManager.IsMyTurn)
         {
-            int cardCost = gameObject.GetComponent<CardDetails>().DoubloonCost;
-            int currentPlayerDoubloons = GameManager.currentPlayerDoubloons;
+            if(isOwned && cardHighlightImage.sprite == NoHightlight)
+            {
+                int cardCost = gameObject.GetComponent<CardDetails>().DoubloonCost;
+                int currentPlayerDoubloons = GameManager.currentPlayerDoubloons;
 
-            if (inHand && cardCost <= currentPlayerDoubloons)
-            {
-                CardHighlight("blue", true);
+                if (inHand && cardCost <= currentPlayerDoubloons)
+                {
+                    PlayerManager.CmdCardHighlight("blue", true, gameObject);
+                }
+                else if (inHand && cardCost > currentPlayerDoubloons)
+                {
+                    PlayerManager.CmdCardHighlight("grey", true, gameObject);
+                }
+                else if (!inHand)
+                {
+                    PlayerManager.CmdCardHighlight("green", true, gameObject);
+                }
+                
             }
-            else if (inHand && cardCost > currentPlayerDoubloons)
+            else if(!isOwned && cardHighlightImage.sprite == NoHightlight)
             {
-                CardHighlight("grey", true);
+                PlayerManager.CmdCardHighlight("green", true, gameObject);
             }
-            else if (!inHand)
+            else if(!isOwned && cardHighlightImage.sprite == RedHightlight)
+            {
+                PlayerManager.CmdCardHighlight("purple", true, gameObject);
+            }
+        }
+        else
+        {
+            if(isOwned && cardHighlightImage.sprite == NoHightlight)
+            {
+                int cardCost = gameObject.GetComponent<CardDetails>().DoubloonCost;
+                int currentPlayerDoubloons = GameManager.currentPlayerDoubloons;
+
+                if (inHand && cardCost <= currentPlayerDoubloons)
+                {
+                    CardHighlight("blue", true);
+                }
+                else if (inHand && cardCost > currentPlayerDoubloons)
+                {
+                    CardHighlight("grey", true);
+                }
+                else if (!inHand)
+                {
+                    CardHighlight("green", true);
+                }
+                
+            }
+            else if(!isOwned && cardHighlightImage.sprite == NoHightlight)
             {
                 CardHighlight("green", true);
             }
-            
+            else if(!isOwned && cardHighlightImage.sprite == RedHightlight)
+            {
+                CardHighlight("purple", true);
+            }
         }
+        
     }
 
     public void CardUnHover()
     {
-        if(isOwned && cardHightlightImage.sprite != RedHightlight)
+        if(PlayerManager.IsMyTurn)
         {
-            CardHighlight("blue", false);
+            if(cardHighlightImage.sprite == PurpleHighlight)
+            {
+                PlayerManager.CmdCardHighlight("red", true, gameObject);
+            }
+            else if(isOwned && cardHighlightImage.sprite != RedHightlight)
+            {
+                PlayerManager.CmdCardHighlight("blue", false, gameObject);
+            }
+            else if (!isOwned)
+            {
+                PlayerManager.CmdCardHighlight("blue", false, gameObject);
+            }
+            else
+            {
+                PlayerManager.CmdCardHighlight("blue", false, gameObject);
+            }
         }
+        else
+        {
+            if(isOwned && (cardHighlightImage.sprite == RedHightlight || cardHighlightImage.sprite == PurpleHighlight))
+            {
+                CardHighlight("red", true);
+            }
+            else
+            {
+                CardHighlight("blue", false);
+            }
+        }
+        
     }
 
     public void CardAttackHighlightOn()
     {
         if(PlayerManager.AttackingTarget == null)
         {
-            CardHighlight("green", true);
+            PlayerManager.CmdCardHighlight("green", true, gameObject);
         }
         else if(PlayerManager.AttackingTarget != null)
         {
-            CardHighlight("green", false);
+            PlayerManager.CmdCardHighlight("green", false, gameObject);
         }
         else
         {
@@ -280,28 +352,32 @@ public class CardDetails : NetworkBehaviour
     {   
         if(On)
         {
-            cardHightlightImage.enabled = true;
+            cardHighlightImage.enabled = true;
             if(color == "blue")
             {
-                cardHightlightImage.sprite = BlueHighlight;
+                cardHighlightImage.sprite = BlueHighlight;
             }
             else if (color == "red")
             {
-                cardHightlightImage.sprite = RedHightlight;
+                cardHighlightImage.sprite = RedHightlight;
             }
             else if (color == "green")
             {
-                cardHightlightImage.sprite = GreenHighlight;
+                cardHighlightImage.sprite = GreenHighlight;
             }
             else if(color == "grey")
             {
-                cardHightlightImage.sprite = GreyHighlight;
+                cardHighlightImage.sprite = GreyHighlight;
+            }
+            else if(color == "purple")
+            {
+                cardHighlightImage.sprite = PurpleHighlight;
             }
         }
         else
         {
-            cardHightlightImage.sprite = null;
-            cardHightlightImage.enabled = false;
+            cardHighlightImage.sprite = NoHightlight;
+            cardHighlightImage.enabled = false;
         }
         
     }

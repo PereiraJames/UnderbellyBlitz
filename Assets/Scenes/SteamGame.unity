@@ -3644,7 +3644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1054705959
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7034,6 +7034,10 @@ PrefabInstance:
       propertyPath: BluePlayerHighlight
       value: 
       objectReference: {fileID: 21300000, guid: 4589afb0704055948988e6b13930c80f, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: PurpleCardHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 49bae08cf154cb145bfdb74db4703cf7, type: 3}
     - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
       propertyPath: PurplePlayerHighlight
       value: 

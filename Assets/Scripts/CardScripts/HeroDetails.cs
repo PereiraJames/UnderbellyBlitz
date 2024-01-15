@@ -7,8 +7,9 @@ using Mirror;
 public class HeroDetails : NetworkBehaviour
 {
     private GameManager GameManager;
-    private GameObject Canvas;
     private PlayerManager PlayerManager;
+    private UIManager UIManager;
+    private GameObject Canvas;
     private RectTransform RectPlayerSlot;
 
 
@@ -20,6 +21,11 @@ public class HeroDetails : NetworkBehaviour
     public string DeckTag = "";
     
     public bool CanHeroPower = true;
+
+    void Start()
+    {
+        UIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
+    }
 
     public void OnSelected()
     {
@@ -44,6 +50,80 @@ public class HeroDetails : NetworkBehaviour
     public void SetHighlightSprite()
     {
         
+    }
+
+    public void OnHover()
+    {
+        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+        Image TargetHighlight = null;
+        foreach (Transform child in gameObject.GetComponentInChildren<Transform>())
+        {
+            if(child.gameObject.name == "EnemyHighlight" || child.gameObject.name == "PlayerHighlight")
+            {
+                TargetHighlight = child.GetComponent<Image>();
+            }
+        }
+        
+        if(TargetHighlight != null)
+        {
+            if(TargetHighlight.sprite == UIManager.RedPlayerHighlight)
+            {
+                PlayerManager.CmdHighlightHero("purple", true, false);
+            }
+            else
+            {
+                TargetHighlight.sprite = UIManager.BluePlayerHighlight;
+            }
+        }
+    }
+
+    public void OnHoverExit()
+    {
+        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+        
+        Image TargetHighlight = null;
+        foreach (Transform child in gameObject.GetComponentInChildren<Transform>())
+        {
+            if(child.gameObject.name == "EnemyHighlight" || child.gameObject.name == "PlayerHighlight")
+            {
+                TargetHighlight = child.GetComponent<Image>();
+            }
+        }
+
+        if(TargetHighlight != null)
+        {
+            if(TargetHighlight.sprite == UIManager.PurplePlayerHighlight)
+            {
+                PlayerManager.CmdHighlightHero("red", true, false);
+            }
+            else if(PlayerManager.IsMyTurn) 
+            {
+                PlayerManager.CmdHighlightHero("turn", true, true);
+                if(TargetHighlight.sprite == UIManager.BluePlayerHighlight)
+                {
+                    TargetHighlight.sprite = UIManager.NoPlayerHighlight;
+                }
+            }
+            else if(!PlayerManager.IsMyTurn)
+            {
+                PlayerManager.CmdHighlightHero("turn", true, false);
+                if(TargetHighlight.sprite == UIManager.BluePlayerHighlight)
+                {
+                    TargetHighlight.sprite = UIManager.NoPlayerHighlight;
+                }
+            }
+            else if(TargetHighlight.sprite == UIManager.BluePlayerHighlight)
+            {
+                TargetHighlight.sprite = UIManager.NoPlayerHighlight;
+            }
+            else
+            {
+                PlayerManager.CmdHighlightHero("blue",false, false);
+            }
+        }
+
     }
     
     public void OnHeroPowerHover()
