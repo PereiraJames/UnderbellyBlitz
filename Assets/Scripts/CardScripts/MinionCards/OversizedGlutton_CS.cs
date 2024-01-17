@@ -24,7 +24,7 @@ public class OversizedGlutton_CS : CardAbilities
 
     }
 
-    public override void OnSilenced()
+    public override void OnStartTurn()
     {
         
     }

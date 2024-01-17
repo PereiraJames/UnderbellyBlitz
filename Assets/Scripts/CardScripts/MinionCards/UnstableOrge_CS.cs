@@ -27,7 +27,7 @@ public class UnstableOrge_CS : CardAbilities
 
     }
 
-    public override void OnSilenced()
+    public override void OnStartTurn()
     {
         
     }

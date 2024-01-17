@@ -23,5 +23,5 @@ public abstract class CardAbilities : NetworkBehaviour
     
     public abstract void OnLastResort();
 
-    public abstract void OnSilenced();
+    public abstract void OnStartTurn();
 }

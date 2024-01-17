@@ -41,7 +41,7 @@ public class FearlessWarlord_CS : CardAbilities
 
     }
 
-    public override void OnSilenced()
+    public override void OnStartTurn()
     {
         
     }

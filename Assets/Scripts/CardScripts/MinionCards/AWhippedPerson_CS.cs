@@ -25,7 +25,7 @@ public class AWhippedPerson_CS : CardAbilities
 
     }
 
-    public override void OnSilenced()
+    public override void OnStartTurn()
     {
         
     }

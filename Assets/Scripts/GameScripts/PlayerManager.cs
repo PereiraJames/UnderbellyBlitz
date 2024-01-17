@@ -641,6 +641,17 @@ public class PlayerManager : NetworkBehaviour
         pm.IsMyTurn = !pm.IsMyTurn;
         GameManager.EndTurn();
         UIManager.DisplayTurnDisplay();
+
+        if(IsMyTurn) 
+        {
+            foreach (Transform child in PlayerSlot.GetComponentsInChildren<Transform>())
+            {
+                if (child.gameObject.tag == "Cards")
+                {
+                    child.GetComponent<CardAbilities>().OnStartTurn();
+                }
+            }
+        }
     }
 
     [Command]

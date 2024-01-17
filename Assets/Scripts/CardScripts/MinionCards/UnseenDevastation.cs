@@ -47,7 +47,7 @@ public class UnseenDevastation : CardAbilities
 
     }
 
-    public override void OnSilenced()
+    public override void OnStartTurn()
     {
         
     }

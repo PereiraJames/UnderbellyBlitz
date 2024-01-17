@@ -39,7 +39,7 @@ public class RecklessHealer_CS : CardAbilities
 
     }
 
-    public override void OnSilenced()
+    public override void OnStartTurn()
     {
         
     }

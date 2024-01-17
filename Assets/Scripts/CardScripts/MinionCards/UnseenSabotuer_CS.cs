@@ -43,7 +43,7 @@ public class UnseenSabotuer_CS : CardAbilities
 
     }
 
-    public override void OnSilenced()
+    public override void OnStartTurn()
     {
         
     }

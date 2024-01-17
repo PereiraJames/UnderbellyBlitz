@@ -34,7 +34,7 @@ public class BearerOfBadNews_CS : CardAbilities
 
     }
 
-    public override void OnSilenced()
+    public override void OnStartTurn()
     {
         
     }

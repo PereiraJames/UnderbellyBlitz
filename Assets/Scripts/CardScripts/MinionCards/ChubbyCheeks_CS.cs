@@ -23,7 +23,7 @@ public class ChubbyCheeks_CS : CardAbilities
         PlayerManager.CmdDealCards(1, GameManager.PlayerDeck);
     }
 
-    public override void OnSilenced()
+    public override void OnStartTurn()
     {
         
     }

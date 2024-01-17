@@ -6,8 +6,32 @@ using Mirror;
 
 public class EarlyKnight_CS : CardAbilities
 {
+    bool StartTurn = false;
     public override void OnEntry()
     {
+        
+    }
+
+    public override void OnEndTurn()
+    {
+
+    }
+
+    public override void OnHit()
+    {
+
+    }
+    
+    public override void OnLastResort()
+    {
+
+    }
+
+    public override void OnStartTurn()
+    {
+        if(StartTurn == true){return;}
+        StartTurn = true;
+
         GameObject PlayerSlot = PlayerManager.PlayerSlot;
         GameObject EnemySlot = PlayerManager.EnemySlot;
 
@@ -26,25 +50,5 @@ public class EarlyKnight_CS : CardAbilities
                 PlayerManager.CmdDestroyTarget(child.gameObject);
             }
         }
-    }
-
-    public override void OnEndTurn()
-    {
-
-    }
-
-    public override void OnHit()
-    {
-
-    }
-    
-    public override void OnLastResort()
-    {
-
-    }
-
-    public override void OnSilenced()
-    {
-        
     }
 }

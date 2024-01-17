@@ -27,7 +27,7 @@ public class JohnConstantlyDrunk_CS : CardAbilities
 
     }
 
-    public override void OnSilenced()
+    public override void OnStartTurn()
     {
         
     }

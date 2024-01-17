@@ -27,7 +27,7 @@ public class CliffordSummoner_CS : CardAbilities
         }
     }
 
-    public override void OnSilenced()
+    public override void OnStartTurn()
     {
         
     }

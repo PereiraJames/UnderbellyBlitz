@@ -24,7 +24,7 @@ public class EnragedBeast_CS : CardAbilities
         PlayerManager.CmdGMPlayerHealth(-3);
     }
 
-    public override void OnSilenced()
+    public override void OnStartTurn()
     {
         
     }

@@ -33,7 +33,7 @@ public class WailingNuisance_CS : CardAbilities
 
     }
 
-    public override void OnSilenced()
+    public override void OnStartTurn()
     {
         
     }
