@@ -202,9 +202,10 @@ MonoBehaviour:
   GreyHighlight: {fileID: 0}
   PurpleHighlight: {fileID: 0}
   NoHightlight: {fileID: 0}
+  DamagedHighlight: {fileID: 0}
   cardHighlightImage: {fileID: 0}
   amountOfEachCard: 2
-  DoubloonCost: 5
+  DoubloonCost: 1
   MaxCardAttack: 4
   MaxCardHealth: 4
   CurrentCardHealth: 1

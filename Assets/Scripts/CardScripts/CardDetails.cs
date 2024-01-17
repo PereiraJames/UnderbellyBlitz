@@ -25,6 +25,7 @@ public class CardDetails : NetworkBehaviour
     public Sprite GreyHighlight;
     public Sprite PurpleHighlight;
     public Sprite NoHightlight;
+    public Sprite DamagedHighlight;
 
 
     public Image cardHighlightImage;
@@ -66,6 +67,7 @@ public class CardDetails : NetworkBehaviour
         GreenHighlight = UIManager.GreenCardHighlight;
         GreyHighlight = UIManager.GreyCardHighlight;
         PurpleHighlight = UIManager.PurpleCardHighlight;
+        DamagedHighlight = UIManager.DamagedCardHighlight;
 
         foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
         {
@@ -240,6 +242,10 @@ public class CardDetails : NetworkBehaviour
             {
                 int cardCost = gameObject.GetComponent<CardDetails>().DoubloonCost;
                 int currentPlayerDoubloons = GameManager.currentPlayerDoubloons;
+                if(gameObject.GetComponent<CardDetails>().cardHighlightImage == UIManager.DamagedCardHighlight)
+                {
+                    return;
+                }
 
                 if (inHand && cardCost <= currentPlayerDoubloons)
                 {

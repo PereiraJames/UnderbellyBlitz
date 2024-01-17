@@ -642,7 +642,7 @@ public class PlayerManager : NetworkBehaviour
         GameManager.EndTurn();
         UIManager.DisplayTurnDisplay();
 
-        if(IsMyTurn) 
+        if(IsMyTurn && isOwned) 
         {
             foreach (Transform child in PlayerSlot.GetComponentsInChildren<Transform>())
             {
@@ -800,7 +800,7 @@ public class PlayerManager : NetworkBehaviour
         Target.GetComponent<CardDetails>().SetCardHealth(Damage);
         if(0 > Damage)
         {
-
+            CmdCardDamageEffect(Target);
         }
 
         int TargetHealth = Target.GetComponent<CardDetails>().GetCardHealth();
@@ -976,6 +976,10 @@ public class PlayerManager : NetworkBehaviour
         if(card != null)
         {
             CardDetails cardDetails = card.GetComponent<CardDetails>();
+            if(cardDetails.cardHighlightImage.sprite == cardDetails.DamagedHighlight)
+            {
+                return;
+            }
             if(On)
             {
                 cardDetails.cardHighlightImage.enabled = true;
@@ -998,6 +1002,10 @@ public class PlayerManager : NetworkBehaviour
                 else if(color == "purple")
                 {
                     cardDetails.cardHighlightImage.sprite = cardDetails.PurpleHighlight;
+                }
+                else if(color == "damaged")
+                {
+                    cardDetails.cardHighlightImage.sprite = cardDetails.DamagedHighlight;
                 }
             }
             else
@@ -1035,9 +1043,12 @@ public class PlayerManager : NetworkBehaviour
             PlayerCardHealth -= EnemyAttackDamage;
             EnemyCardHealth -= PlayerAttackDamage;
 
+            CmdCardDamageEffect(AttackingTarget);
+            CmdCardDamageEffect(AttackedTarget);
+
             AttackingTarget.GetComponent<CardAbilities>().OnHit();
             AttackedTarget.GetComponent<CardAbilities>().OnHit();
-
+            
 
             AttackingTarget.GetComponent<CardDetails>().AttackTurn(false);
             AttackedTarget.GetComponent<CardDetails>().SetCardHealth(-PlayerAttackDamage);
@@ -1477,7 +1488,30 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void RpcCardDamageEffect(GameObject card)
     {
+        if(card == null){return;}
+        
+        Sprite currentHighlight = card.GetComponent<CardDetails>().cardHighlightImage.sprite;
+        // CmdCardHighlight("damaged", true, card);
+        Debug.Log(card + " DAMAGED!");
 
+        StartCoroutine(DisplayDamagedCard());
+
+        IEnumerator DisplayDamagedCard()
+        {
+            // Activate the GameObject
+            card.GetComponent<CardDetails>().cardHighlightImage.sprite = card.GetComponent<CardDetails>().DamagedHighlight;
+            Debug.Log(card.GetComponent<CardDetails>().DamagedHighlight);
+
+            // Wait for 3 seconds
+            yield return new WaitForSeconds(1f);
+            
+            if(card != null)
+            {
+                card.GetComponent<CardDetails>().cardHighlightImage.sprite = card.GetComponent<CardDetails>().BlueHighlight;
+            }
+            // Deactivate the GameObject after 3 seconds
+            Debug.Log("2");
+        }
     }
 
     [Command]

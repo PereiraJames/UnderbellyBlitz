@@ -37,6 +37,7 @@ public class UIManager : NetworkBehaviour
     public Sprite GreyCardHighlight;
     public Sprite PurpleCardHighlight;
     public Sprite NoCardHighlight;
+    public Sprite DamagedCardHighlight;
 
     public Image PlayerHighlight;
     public Image EnemyHighlight;
