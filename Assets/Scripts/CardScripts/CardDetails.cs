@@ -185,7 +185,7 @@ public class CardDetails : NetworkBehaviour
 
     public void SelectedTarget() //In perspective of selected target
     {
-        if(PlayerManager.AttackDisplayOpened)
+        if(PlayerManager.AttackDisplayOpened || PlayerManager.DestroyDisplayOpen)
         {
             if(PlayerManager.AttackBeingMade && PlayerManager.AttackingTarget != null && !isOwned)
             {
@@ -198,7 +198,7 @@ public class CardDetails : NetworkBehaviour
             {
                 Debug.Log("Destroying: " + gameObject);
                 PlayerManager.CmdDestroyTarget(gameObject); 
-                PlayerManager.CmdShowAttackDisplay("CloseDisplay");
+                PlayerManager.CmdShowDestoryDisplay("CloseDisplay");
                 PlayerManager.DestroyBeingMade = false;
             }
             else
@@ -223,8 +223,9 @@ public class CardDetails : NetworkBehaviour
     public void DestroyTarget()
     {
         Debug.Log("Destroy");
-        PlayerManager.DestroyBeingMade = true;
-        PlayerManager.CmdShowAttackDisplay("OpenDisplay");
+        // PlayerManager.DestroyBeingMade = true;
+        PlayerManager.AttackingTarget = gameObject;
+        PlayerManager.CmdShowDestoryDisplay("OpenDisplay");
     }
 
     //CARD ATTACK END

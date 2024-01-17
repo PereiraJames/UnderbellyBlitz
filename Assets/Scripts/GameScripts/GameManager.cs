@@ -9,8 +9,8 @@ public class GameManager : NetworkBehaviour
     public GameObject PlayerSlot; 
     public PlayerManager PlayerManager;   
     public string GameState = "End Turn";
-    public int PlayerHealth = 20;
-    public int EnemyHealth = 20;
+    public int PlayerHealth = 35;
+    public int EnemyHealth = 35;
 
     public int totalPlayerDoubloons = 2;
     public int currentPlayerDoubloons = 0;
@@ -91,7 +91,7 @@ public class GameManager : NetworkBehaviour
             {
                 child.GetComponent<CardDetails>().AttackTurn(true);
             }
-        }        
+        }       
 
         UIManager.HighlightTurn();
         currentPlayerDoubloons = totalPlayerDoubloons;

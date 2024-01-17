@@ -607,7 +607,7 @@ GameObject:
   - component: {fileID: 131776986}
   - component: {fileID: 131776985}
   m_Layer: 5
-  m_Name: HealthImage
+  m_Name: PlayerHealthImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -682,7 +682,7 @@ GameObject:
   - component: {fileID: 148202699}
   - component: {fileID: 148202698}
   m_Layer: 5
-  m_Name: DoubloonImage
+  m_Name: PlayerDoubloonImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2418,7 +2418,7 @@ MonoBehaviour:
   networkAddress: localhost
   maxConnections: 100
   disconnectInactiveConnections: 0
-  disconnectInactiveTimeout: 60
+  disconnectInactiveTimeout: 400
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 1991480171998483880, guid: 2f3fad5e213aeaa40b6f9d49db8af0c9, type: 3}
   autoCreatePlayer: 1
@@ -5403,7 +5403,7 @@ GameObject:
   - component: {fileID: 1523346712}
   - component: {fileID: 1523346711}
   m_Layer: 5
-  m_Name: HealthImage
+  m_Name: EnemyHealthImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5489,7 +5489,7 @@ GameObject:
   - component: {fileID: 1589386158}
   - component: {fileID: 1589386157}
   m_Layer: 5
-  m_Name: DoubloonImage
+  m_Name: EnemyDoubloonImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6893,6 +6893,10 @@ PrefabInstance:
       propertyPath: PlayerHealth
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 6345455493711577156, guid: 2959b9152f3a2ea40bfdc5dc9842bbb6, type: 3}
+      propertyPath: TotalDoubloons
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7035,6 +7039,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 4589afb0704055948988e6b13930c80f, type: 3}
     - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: PlayerTurnHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 3125b73de1b912544a3457fdc894e607, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
       propertyPath: PurpleCardHighlight
       value: 
       objectReference: {fileID: 21300000, guid: 49bae08cf154cb145bfdb74db4703cf7, type: 3}
@@ -7042,6 +7050,10 @@ PrefabInstance:
       propertyPath: PurplePlayerHighlight
       value: 
       objectReference: {fileID: 21300000, guid: 9fdc4d470455b6342830a0816a3b6b2a, type: 3}
+    - target: {fileID: 3380840410915736272, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
+      propertyPath: DamagedPlayerHighlight
+      value: 
+      objectReference: {fileID: 21300000, guid: 98a64b278ac62a94a89fa1a3866e51d8, type: 3}
     - target: {fileID: 5135091845981163631, guid: 47e9e8dad94bc444f9906a7e73c27c66, type: 3}
       propertyPath: sceneId
       value: 545177264

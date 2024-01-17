@@ -36,7 +36,7 @@ public class PlayerManager : NetworkBehaviour
     public bool DestroyBeingMade = false;
 
     public bool AttackDisplayOpened = false;
-    public GameObject AttackingDisplay;
+    public bool DestroyDisplayOpen = false;
 
     private int currentPlayerCount = 0;
 
@@ -103,10 +103,7 @@ public class PlayerManager : NetworkBehaviour
         EnemyImage = GameObject.Find("EnemyImage");
 
         PlayerSockets.Add(PlayerSlot);
-        EnemySockets.Add(EnemySlot);
-
-        AttackingDisplay = GameObject.Find("AttackingDisplay");
-        
+        EnemySockets.Add(EnemySlot);        
 
         if(isClientOnly)
         {
@@ -452,6 +449,84 @@ public class PlayerManager : NetworkBehaviour
     }
 
     [Command]
+    public void CmdShowDestoryDisplay(string state)
+    {
+        RpcShowDestroyDisplay(state);
+    }
+
+    [ClientRpc]
+    public void RpcShowDestroyDisplay(string state)
+    {
+        if(isOwned)
+        {
+            foreach (Transform child in EnemySlot.GetComponentsInChildren<Transform>())
+            {
+                if(child.gameObject.tag == "Cards")
+                {
+                    EnemyPlayedCards.Add(child.gameObject);
+                }
+            }
+
+            if (!DestroyBeingMade && state == "OpenDisplay" && EnemyPlayedCards.Count > 0)
+            {
+                Debug.Log("OpenedDisplay");
+                DestroyDisplayOpen = true;
+                if(EnemyPlayedCards.Count > 0)
+                {
+                    foreach (GameObject card in EnemyPlayedCards)
+                    {
+                        // card.GetComponent<CardDetails>().CardHighlight("red", true);
+                        CmdCardHighlight("red", true, card);
+                    }
+                }
+                else
+                {
+                    Debug.Log("EnemyPlayedCards is empty");
+                }
+
+                DestroyBeingMade = true;
+                AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOn();
+            }
+            else if (state == "CloseDisplay")
+            {
+                foreach (GameObject card in EnemyPlayedCards)
+                {
+                    // card.GetComponent<CardDetails>().CardHighlight("red", false);
+                    CmdCardHighlight("red", false, card);
+                }
+                
+                Debug.Log("ClosedDisplay");
+                Debug.Log(AttackingTarget);
+                
+                // if(AttackingTarget != null)
+                // {
+                //     AttackingTarget.GetComponent<CardDetails>().CardAttackHighlightOff();
+                // }
+    
+                AttackBeingMade = false;
+                DestroyBeingMade = false;
+                AttackDisplayOpened = false;
+                AttackingTarget = null;
+                AttackedTarget = null;
+            }
+            else
+            {
+                AttackBeingMade = false;
+                DestroyBeingMade = false;
+                AttackDisplayOpened = false;
+                AttackingTarget = null;
+                AttackedTarget = null;
+                Debug.Log("Did not do anythin - Display");
+            }
+            EnemyPlayedCards.Clear();
+        }
+        else
+        {
+            Debug.Log("NODISPLAY");
+        }
+    }
+
+    [Command]
     public void CmdShowAttackDisplay(string state)
     {
         RpcShowAttackDisplay(state);
@@ -502,13 +577,6 @@ public class PlayerManager : NetworkBehaviour
             }
             else if (state == "CloseDisplay")
             {
-                foreach (Transform child in AttackingDisplay.GetComponentsInChildren<Transform>())
-                {
-                    if(child.gameObject.tag == "Cards")
-                    {
-                        EnemyPlayedCards.Add(child.gameObject);
-                    }
-                }
                 foreach (GameObject card in EnemyPlayedCards)
                 {
                     // card.GetComponent<CardDetails>().CardHighlight("red", false);
@@ -572,6 +640,7 @@ public class PlayerManager : NetworkBehaviour
         PlayerManager pm = NetworkClient.connection.identity.GetComponent<PlayerManager>();
         pm.IsMyTurn = !pm.IsMyTurn;
         GameManager.EndTurn();
+        UIManager.DisplayTurnDisplay();
     }
 
     [Command]
@@ -718,6 +787,10 @@ public class PlayerManager : NetworkBehaviour
     {
         if(Target == null) {return;}
         Target.GetComponent<CardDetails>().SetCardHealth(Damage);
+        if(0 > Damage)
+        {
+
+        }
 
         int TargetHealth = Target.GetComponent<CardDetails>().GetCardHealth();
         CmdUpdateAllCardText();
@@ -1376,6 +1449,24 @@ public class PlayerManager : NetworkBehaviour
         {
             Debug.Log(TargetImage);
         }
+    }
+
+    // [Command]
+    // public void CmdTurnDisplay()
+    // {
+    //     RpcTurnDisplay();
+    // }
+
+    [Command]
+    public void CmdCardDamageEffect(GameObject card)
+    {
+        RpcCardDamageEffect(card);
+    }
+
+    [ClientRpc]
+    public void RpcCardDamageEffect(GameObject card)
+    {
+
     }
 
     [Command]

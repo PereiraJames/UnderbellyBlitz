@@ -17,7 +17,7 @@ public class TripleThreat_CS : CardAbilities
             {
                 if(child.gameObject.name == "TripleThreat(Clone)")
                 {
-                    if(count == 0)
+                    if(count == 2)
                     {
                         PlayerManager.CmdSummonMinion(4,4,true);
                         count++;

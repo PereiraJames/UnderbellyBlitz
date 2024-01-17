@@ -8,6 +8,7 @@ public class UIManager : NetworkBehaviour
 {
     public PlayerManager PlayerManager;
     public GameManager GameManager;
+    public SoundManager SoundManager;
     public GameObject Button;
     public GameObject PlayerHealthText;
     public GameObject EnemyHealthText;
@@ -21,6 +22,7 @@ public class UIManager : NetworkBehaviour
 
     public GameObject Canvas;
     public GameObject WinDisplay;
+    public GameObject TurnDisplay; 
 
     public Sprite RedPlayerHighlight;
     public Sprite BluePlayerHighlight;
@@ -41,6 +43,7 @@ public class UIManager : NetworkBehaviour
 
     void Start()
     {
+        SoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         Canvas = GameObject.Find("Main Canvas");
         GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         UpdatePlayerText();
@@ -79,6 +82,33 @@ public class UIManager : NetworkBehaviour
                     child.GetComponent<Text>().text = "They Win!";
                 }
             }  
+        }
+    }
+    
+    public void DisplayTurnDisplay()
+    {
+        PlayerManager = NetworkClient.connection.identity.GetComponent<PlayerManager>();
+        if(PlayerManager.IsMyTurn)
+        {      
+            Debug.Log(TurnDisplay);
+            
+            StartCoroutine(ActivateObjectForDuration());
+        }
+
+        IEnumerator ActivateObjectForDuration()
+        {
+            if(TurnDisplay != null)
+            {
+                SoundManager.PlayTurnFX();
+                // Activate the GameObject
+                TurnDisplay.SetActive(true);
+
+                // Wait for 3 seconds
+                yield return new WaitForSeconds(2f);
+
+                // Deactivate the GameObject after 3 seconds
+                TurnDisplay.SetActive(false);
+            }
         }
     }
     

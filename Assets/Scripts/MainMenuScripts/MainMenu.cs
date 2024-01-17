@@ -17,7 +17,7 @@ public class MainMenu : MonoBehaviour
 
     public void LoadSteamHost()
     {
-        SceneManager.LoadScene("SteamGameNew");
+        SceneManager.LoadScene("SteamGame");
     }
 
     public void LoadLocalHost()
