@@ -204,12 +204,13 @@ MonoBehaviour:
   DamagedHighlight: {fileID: 0}
   cardHighlightImage: {fileID: 0}
   amountOfEachCard: 0
-  DoubloonCost: 1
+  DoubloonCost: 4
   MaxCardAttack: 3
   MaxCardHealth: 3
   CurrentCardHealth: 1
   CurrentCardAttack: 1
   CanAttack: 1
+  Testing: 0
   isFrozen: 0
   isDamaged: 0
   inHand: 0

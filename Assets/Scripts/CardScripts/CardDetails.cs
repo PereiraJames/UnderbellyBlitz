@@ -39,6 +39,8 @@ public class CardDetails : NetworkBehaviour
     public int CurrentCardAttack = 1;
     public bool CanAttack = false;
 
+    public bool Testing = false;
+
     public bool isFrozen = false;
     public bool isDamaged = false;
     public bool inHand = false;
@@ -60,7 +62,11 @@ public class CardDetails : NetworkBehaviour
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
         CurrentCardAttack = MaxCardAttack;
         CurrentCardHealth = MaxCardHealth;
-
+        
+        if(Testing == true)
+        {
+            DoubloonCost = 1;
+        }
 
         RedHightlight = UIManager.RedCardHighlight;
         BlueHighlight = UIManager.BlueCardHighlight;

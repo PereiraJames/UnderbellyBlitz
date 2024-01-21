@@ -20,7 +20,7 @@ public class CarelessAmbusher_CS : CardAbilities
 
         foreach (Transform child in PlayerSlot.GetComponentsInChildren<Transform>())
         {
-            if (child.gameObject.tag == "Cards")
+            if (child.gameObject.tag == "Cards" && child.gameObject != gameObject)
             {
                 PlayerManager.CmdDealDamage(child.gameObject, -4);
             }

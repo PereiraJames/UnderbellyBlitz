@@ -19,7 +19,7 @@ public class UnseenSabotuer_CS : CardAbilities
             }
         }
 
-        foreach (Transform child in PlayerSlot.GetComponentsInChildren<Transform>())
+        foreach (Transform child in EnemySlot.GetComponentsInChildren<Transform>())
         {
             if (child.gameObject.tag == "Cards")
             {
