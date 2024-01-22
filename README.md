@@ -19,11 +19,12 @@ For SteamHosting:
 Be sure to add the game to the steam launcher as a "Non-Steam Game".
 
 ## For LocalHosting
+**Recommended**
 You will need to open two windows of the game to play. Essentially playing on both sides of the game.
 
 ## For SteamHosting
 **Note that this is slightly buggy. It is still WIP**
-
+**Currently the application is having compatability issues with Steam. Best not to use it. Recommended Local Hosting**
 Click the "Steam Host" button, and have 1 of the 2 participating players click host. Have the second player join the game through a Steam invite or "Join The Game" function that steam provides.
 
 ## How To Play:
