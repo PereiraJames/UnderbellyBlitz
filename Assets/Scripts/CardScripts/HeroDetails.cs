@@ -8,6 +8,7 @@ public class HeroDetails : NetworkBehaviour
 {
     private GameManager GameManager;
     private PlayerManager PlayerManager;
+    private SoundManager SoundManager;
     private UIManager UIManager;
     private GameObject Canvas;
     private RectTransform RectPlayerSlot;
@@ -24,6 +25,7 @@ public class HeroDetails : NetworkBehaviour
 
     void Start()
     {
+        SoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         UIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
@@ -191,6 +193,7 @@ public class HeroDetails : NetworkBehaviour
 
         if(currentPlayerDoubloons >= heroPowerCost && PlayerManager.IsMyTurn)
         {
+            SoundManager.PlayHeroAbilityFX();
             if(DeckTag == "Keagan")
             {
                 PlayerManager.CmdGMPlayerHealth(-2);

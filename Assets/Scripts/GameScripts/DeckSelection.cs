@@ -9,6 +9,7 @@ public class DeckSelection : NetworkBehaviour
     public GameObject DeckSelectionUI;
     public PlayerManager PlayerManager;
     public GameManager GameManager;
+    private SoundManager SoundManager;
 
     public string DeckTag;
 
@@ -26,6 +27,7 @@ public class DeckSelection : NetworkBehaviour
 
     public void PlayerReady()
     {
+        SoundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
@@ -33,7 +35,7 @@ public class DeckSelection : NetworkBehaviour
 
         if(GameManager.PlayerDeck != "")
         {
-        
+            SoundManager.PlayDeckFX();
             PlayerManager.CmdDealCards(5,GameManager.PlayerDeck);
             PlayerManager.CmdPlayerReadyUp();
             foreach (Transform child in DeckSelectionUI.GetComponentsInChildren<Transform>())
