@@ -6,14 +6,26 @@ This my Unity/C# developed game using the Mirror Network Framework. It is a typi
 
 The main structure of the game is deployed but improvements and additional features are still being added.
 
+For online multiplayer (Still Work in Progress), I am using FizzSteamworks to connect to the Steam API to allow Steam to host the server.
+
 ## Installation:
+Download the Game via: https://drive.google.com/drive/folders/1eeqELKqXO4VPk9QmDqMBU-EygKXegKI0?usp=sharing
 
-Install Game - {}
+Download the "UnderBellyBlitzBuild" file.
 
-Run the "CardGame.exe" file.
+Unzip and Run the "CardGame.exe" file.
 
-Due it has only been set-up as a local host multiplayer game, you will need to open two windows of the game to play. Essentially playing both sides of the game.
-Implementation of online multiplayer in the works.
+For SteamHosting:
+Be sure to add the game to the steam launcher as a "Non-Steam Game".
+
+## For LocalHosting
+**Recommended**
+You will need to open two windows of the game to play. Essentially playing on both sides of the game.
+
+## For SteamHosting
+**Note that this is slightly buggy. It is still WIP**
+**Currently the application is having compatability issues with Steam. Best not to use it. Recommended Local Hosting**
+Click the "Steam Host" button, and have 1 of the 2 participating players click host. Have the second player join the game through a Steam invite or "Join The Game" function that steam provides.
 
 ## How To Play:
 Each Player will connect to the same Server. Meaning one player will need to Host, whilst the second joins them.
@@ -38,7 +50,8 @@ Play cards by dragging and dropping.
 ## Card Mechanics:
 1) Last Resort - Right before the card dies, it activates the ability.
 2) Warcry - When the card enters play, it activates the ability.
-3) End of Turn - When you end your turn, it activates the ability.
+3) Start of Turn - When you begin your turn, it activates the ability.
+4) End of Turn - When you end your turn, it activates the ability.
 
 ## Features to be added:
 1) Card Animations
