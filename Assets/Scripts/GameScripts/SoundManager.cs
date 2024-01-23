@@ -25,42 +25,47 @@ public class SoundManager : NetworkBehaviour
     void Start()
     {
         GameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        PlayerManager = NetworkClient.connection.identity.GetComponent<PlayerManager>();
         UIManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
     public void PlayTurnFX()
     {
+        PlayerManager = NetworkClient.connection.identity.GetComponent<PlayerManager>();
         TurnSource.clip = TurnSound;
         TurnSource.Play();
     }
 
     public void PlayDoubloonFX()
     {
+        PlayerManager = NetworkClient.connection.identity.GetComponent<PlayerManager>();
         HeroSounds.clip = DoubloonSound;
         HeroSounds.Play();
     }
     
     public void PlayHurtFX()
     {
+        PlayerManager = NetworkClient.connection.identity.GetComponent<PlayerManager>();
         CardSounds.clip = HurtSound;
         CardSounds.Play();
     }
     
     public void PlayHeroAbilityFX()
     {
+        PlayerManager = NetworkClient.connection.identity.GetComponent<PlayerManager>();
         HeroAbility.clip = HeroAbilitySound;
         HeroAbility.Play();
     }
 
     public void PlayDeathFX()
     {
+        PlayerManager = NetworkClient.connection.identity.GetComponent<PlayerManager>();
         CardSounds.clip = DeathSound;
         CardSounds.Play();
     }
 
     public void PlayDeckFX()
     {
+        PlayerManager = NetworkClient.connection.identity.GetComponent<PlayerManager>();
         TurnSource.clip = DeckSelectedSound;
         TurnSource.Play();
     }

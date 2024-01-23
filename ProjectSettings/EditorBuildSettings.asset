@@ -13,5 +13,5 @@ EditorBuildSettings:
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
     path: Assets/Scenes/SteamGame.unity
-    guid: 596588d638032fe4a8c27e666ec724d1
+    guid: 52c6098c814a47744a658bb2b54b9b05
   m_configObjects: {}

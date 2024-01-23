@@ -4,11 +4,12 @@ using UnityEngine;
 using Steamworks;
 using Mirror;
 
-public class SteamLobby : MonoBehaviour
+public class SteamLobby_old : MonoBehaviour
 {
     private NetworkManager NetworkManager;
     
     public GameObject hostButton = null;
+    public GameObject hostScreen = null;
     
     protected Callback<LobbyCreated_t> lobbyCreated;
     protected Callback<GameLobbyJoinRequested_t> gameLobbyJoinRequested;
@@ -29,6 +30,7 @@ public class SteamLobby : MonoBehaviour
     public void HostLobby()
     {
         hostButton.SetActive(false);
+        hostScreen.SetActive(false);
 
         SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, NetworkManager.maxConnections);
     }
