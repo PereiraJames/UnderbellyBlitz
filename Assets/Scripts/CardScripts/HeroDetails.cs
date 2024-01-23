@@ -191,24 +191,27 @@ public class HeroDetails : NetworkBehaviour
 
         int heroPowerCost = 2;
 
-        if(currentPlayerDoubloons >= heroPowerCost && PlayerManager.IsMyTurn)
+        if(currentPlayerDoubloons >= heroPowerCost && PlayerManager.IsMyTurn && !PlayerManager.DestroyDisplayOpen)
         {
-            SoundManager.PlayHeroAbilityFX();
+            
             if(DeckTag == "Keagan")
             {
                 PlayerManager.CmdGMPlayerHealth(-2);
                 PlayerManager.CmdUpdateDoubloons(1, true);
                 HeroPowerInactive(heroPowerCost);
+                SoundManager.PlayHeroAbilityFX();
             }
             else if (DeckTag == "Mark")
             {
                 PlayerManager.CmdGMPlayerHealth(2);
                 HeroPowerInactive(heroPowerCost);
+                SoundManager.PlayHeroAbilityFX();
             }
             else if (DeckTag == "Chris")
             {
                 PlayerManager.CmdDealCards(1, GameManager.PlayerDeck);
                 HeroPowerInactive(heroPowerCost);
+                SoundManager.PlayHeroAbilityFX();
             }
             else if (DeckTag == "Deion")
             {
@@ -230,6 +233,7 @@ public class HeroDetails : NetworkBehaviour
                         }
                     }
                     HeroPowerInactive(heroPowerCost);
+                    SoundManager.PlayHeroAbilityFX();
                 }
             }
             else

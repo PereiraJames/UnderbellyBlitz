@@ -801,42 +801,24 @@ public class PlayerManager : NetworkBehaviour
     {
         if(Target == null) {return;}
         Target.GetComponent<CardDetails>().SetCardHealth(Damage);
-        if(0 > Damage)
-        {
-            CmdCardDamageEffect(Target);
-        }
+        // if(0 > Damage)
+        // {
+        //     CmdCardDamageEffect(Target);
+        // }
 
         int TargetHealth = Target.GetComponent<CardDetails>().GetCardHealth();
         CmdUpdateAllCardText();
         if(isOwned)
         {
-            SoundManager.PlayHurtFX();
-            CmdCardDamageEffect(Target);
             Target.GetComponent<CardAbilities>().OnHit(); 
         }    
         
         if(TargetHealth < 1)
         {
-            // Target.GetComponent<CardZoom>().OnHoverExit();
+            SoundManager.PlayHurtFX();
             Debug.Log("RPCDealDamage() : " + Target);
-            StartCoroutine(DeathAnimation(Target));
-            // Target.GetComponent<CardAbilities>().OnLastResort();
-            // Destroy(Target);
+            CmdDeathAnimation(Target);
         }
-    }
-    
-    IEnumerator DeathAnimation(GameObject card)
-    {
-        CmdDeathAnimation(card);
-
-        yield return new WaitForSeconds(2f);
-
-        card.GetComponent<CardAbilities>().OnLastResort();
-
-        yield return new WaitForSeconds(1f);
-        SoundManager.PlayDeathFX();
-        card.GetComponent<CardZoom>().OnHoverExit();
-        Destroy(card);
     }
 
     [Command]
@@ -850,10 +832,7 @@ public class PlayerManager : NetworkBehaviour
     public void RpcDestoryTarget(GameObject Target)
     {
         if(Target == null) {return;}
-        Target.GetComponent<CardZoom>().OnHoverExit();
-        Debug.Log("RPCDestoryTarget: " + Target);
-        Target.GetComponent<CardAbilities>().OnLastResort();
-        Destroy(Target);
+        CmdDeathAnimation(Target);
     }
 
     [Command]
@@ -996,7 +975,7 @@ public class PlayerManager : NetworkBehaviour
         if(card != null)
         {
             CardDetails cardDetails = card.GetComponent<CardDetails>();
-            if(cardDetails.cardHighlightImage.sprite == cardDetails.DamagedHighlight)
+            if(cardDetails.cardHighlightImage.sprite == cardDetails.DamagedHighlight || cardDetails.cardHighlightImage.sprite == cardDetails.DestroyHighlight )
             {
                 return;
             }
@@ -1026,6 +1005,10 @@ public class PlayerManager : NetworkBehaviour
                 else if(color == "damaged")
                 {
                     cardDetails.cardHighlightImage.sprite = cardDetails.DamagedHighlight;
+                }
+                else if(color == "destroy")
+                {
+                    cardDetails.cardHighlightImage.sprite = cardDetails.DestroyHighlight;
                 }
             }
             else
@@ -1063,9 +1046,6 @@ public class PlayerManager : NetworkBehaviour
             PlayerCardHealth -= EnemyAttackDamage;
             EnemyCardHealth -= PlayerAttackDamage;
 
-            CmdCardDamageEffect(AttackingTarget);
-            CmdCardDamageEffect(AttackedTarget);
-
             AttackingTarget.GetComponent<CardAbilities>().OnHit();
             SoundManager.PlayHurtFX();
             AttackedTarget.GetComponent<CardAbilities>().OnHit();
@@ -1080,20 +1060,20 @@ public class PlayerManager : NetworkBehaviour
 
             if(EnemyCardHealth < 1)
             {
-                // AttackedTarget.GetComponent<CardZoom>().OnHoverExit();
-
-                StartCoroutine(DeathAnimation(AttackedTarget));
-                // AttackedTarget.GetComponent<CardAbilities>().OnLastResort();
-                // Destroy(AttackedTarget);
+                CmdDeathAnimation(AttackedTarget);
+            }
+            else
+            {
+                CmdCardDamageEffect(AttackedTarget);
             }
             if(PlayerCardHealth < 1)
             {
-                // AttackingTarget.GetComponent<CardZoom>().OnHoverExit();
-                StartCoroutine(DeathAnimation(AttackingTarget));
-                // AttackingTarget.GetComponent<CardAbilities>().OnLastResort();
-                // Destroy(AttackingTarget);
-            }        
-            
+                CmdDeathAnimation(AttackingTarget);
+            }
+            else
+            {
+                CmdCardDamageEffect(AttackingTarget);
+            }
             
         }
         else
@@ -1152,9 +1132,7 @@ public class PlayerManager : NetworkBehaviour
             
             if(CardHealth < 1)
             {
-                card.GetComponent<CardZoom>().OnHoverExit();
-                card.GetComponent<CardAbilities>().OnLastResort();
-                Destroy(card);
+                CmdDeathAnimation(card);
             }
 
             card.GetComponent<CardDetails>().SetCardHealth(health);
@@ -1206,6 +1184,10 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void RpcGMPlayerHealth(int health)
     {
+        if(0 > health)
+        {
+            SoundManager.PlayHurtFX();
+        }
         CmdHeroItemAnimation(true, "health");
         GameManager.AdjustPlayerHealth(health, isOwned);
     }
@@ -1219,6 +1201,10 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     public void RpcGMPEnemyHealth(int health)
     {
+        if(0 > health)
+        {
+            SoundManager.PlayHurtFX();
+        }
         CmdHeroItemAnimation(false, "health");
         GameManager.AdjustEnemyHealth(health, isOwned);
     }
@@ -1530,8 +1516,7 @@ public class PlayerManager : NetworkBehaviour
         IEnumerator DisplayDamagedCard()
         {
             // Activate the GameObject
-            card.GetComponent<CardDetails>().cardHighlightImage.sprite = card.GetComponent<CardDetails>().DamagedHighlight;
-            Debug.Log(card.GetComponent<CardDetails>().DamagedHighlight);
+            CmdCardHighlight("damaged", true, card);
 
             // Wait for 3 seconds
             yield return new WaitForSeconds(1f);
@@ -1541,7 +1526,6 @@ public class PlayerManager : NetworkBehaviour
                 card.GetComponent<CardDetails>().cardHighlightImage.sprite = card.GetComponent<CardDetails>().BlueHighlight;
             }
             // Deactivate the GameObject after 3 seconds
-            Debug.Log("2");
         }
     }
 
@@ -1577,8 +1561,13 @@ public class PlayerManager : NetworkBehaviour
     public void RpcDeathAnimation(GameObject card)
     {
         float animationDuration = 0.3f;
-        CmdCardHighlight("green", true, card);
-        LeanTween.scale(card, new Vector3(1.2f, 1.2f, 1f), animationDuration)
+        CmdCardHighlight("destroy", true, card);       
+
+        StartCoroutine(DeathAnimation(card));
+
+        IEnumerator DeathAnimation(GameObject card)
+        {
+            LeanTween.scale(card, new Vector3(1.2f, 1.2f, 1f), animationDuration)
             .setEase(LeanTweenType.easeOutQuad)
             .setOnComplete(() =>
             {
@@ -1586,8 +1575,30 @@ public class PlayerManager : NetworkBehaviour
                 LeanTween.scale(card, new Vector3(1f, 1f, 1f), animationDuration)
                     .setEase(LeanTweenType.easeOutQuad);
             });
-        CmdCardHighlight("noeffect", false, card);
+
+            yield return new WaitForSeconds(1f);
+            
+            card.GetComponent<CardZoom>().CardDead = true;
+            card.GetComponent<CardAbilities>().OnLastResort();
+            SoundManager.PlayDeathFX();
+            
+            yield return new WaitForSeconds(0.1f);
+            card.GetComponent<CardZoom>().OnHoverExit();
+            Destroy(card);
+        }
     }
+
+    // [Command]
+    // public void CmdSummonAnimation(GameObject card)
+    // {
+    //     RpcSummonAnimation(card);
+    // }
+
+    // [ClientRpc]
+    // public void RpcSummonAnimation(GameObject card)
+    // {
+        
+    // }
 
     //ANIMATIONS
 }

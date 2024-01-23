@@ -202,6 +202,7 @@ MonoBehaviour:
   PurpleHighlight: {fileID: 0}
   NoHightlight: {fileID: 0}
   DamagedHighlight: {fileID: 0}
+  DestroyHighlight: {fileID: 0}
   cardHighlightImage: {fileID: 0}
   amountOfEachCard: 0
   DoubloonCost: 4
@@ -210,7 +211,7 @@ MonoBehaviour:
   CurrentCardHealth: 1
   CurrentCardAttack: 1
   CanAttack: 1
-  Testing: 0
+  Testing: 1
   isFrozen: 0
   isDamaged: 0
   inHand: 0
@@ -392,6 +393,7 @@ MonoBehaviour:
   Canvas: {fileID: 0}
   Card: {fileID: 5066629975883258224, guid: a0d35160592d6e141a286222a431b5ad, type: 3}
   zoomCardSprite: {fileID: 0}
+  CardDead: 0
 --- !u!61 &-5718898909759396136
 BoxCollider2D:
   m_ObjectHideFlags: 0

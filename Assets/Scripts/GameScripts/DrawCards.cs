@@ -27,6 +27,7 @@ public class DrawCards : NetworkBehaviour
 
     void Endturn()
     {
+        if(PlayerManager.DestroyDisplayOpen){return;}
         PlayerManager.CmdUpdateDoubloons(1,true);
         PlayerManager.CmdDealCards(1, GameManager.PlayerDeck);
         PlayerManager.CmdEndTurn();

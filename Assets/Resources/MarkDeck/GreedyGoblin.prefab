@@ -211,6 +211,7 @@ MonoBehaviour:
   CurrentCardHealth: 1
   CurrentCardAttack: 1
   CanAttack: 1
+  Testing: 1
   isFrozen: 0
   isDamaged: 0
   inHand: 0

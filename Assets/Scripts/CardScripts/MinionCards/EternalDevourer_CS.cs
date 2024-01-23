@@ -12,19 +12,42 @@ public class EternalDevourer_CS : CardAbilities
 
         int count = 0;
 
-        foreach (Transform child in PlayerSlot.GetComponentsInChildren<Transform>())
-        {
-            if (child.gameObject.tag == "Cards" && child.gameObject != gameObject)
-            {
-                PlayerManager.CmdDestroyTarget(child.gameObject);
-                count++;
-            }
-        }
+        // foreach (Transform child in PlayerSlot.GetComponentsInChildren<Transform>())
+        // {
+        //     if (child.gameObject.tag == "Cards" && child.gameObject != gameObject)
+        //     {
+        //         PlayerManager.CmdDestroyTarget(child.gameObject);
+        //         count++;
+        //     }
+        // }
 
         for (int i =0; i < count; i++)
         {
             PlayerManager.CmdSummonMinion(3,1,true);
         }
+        
+        StartCoroutine(Ability());
+
+        IEnumerator Ability()
+        {
+            foreach (Transform child in PlayerSlot.GetComponentsInChildren<Transform>())
+            {
+                if (child.gameObject.tag == "Cards" && child.gameObject != gameObject)
+                {
+                    PlayerManager.CmdDestroyTarget(child.gameObject);
+                    count++;
+                }
+            }
+
+            yield return new WaitForSeconds(1f);
+
+            for (int i =0; i < count; i++)
+            {
+                PlayerManager.CmdSummonMinion(3,1,true);
+            }
+        }
+
+
     }
 
     public override void OnEndTurn()

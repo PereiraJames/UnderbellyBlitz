@@ -62,7 +62,7 @@ public class DragDrop : NetworkBehaviour
     {   
         if(transform.parent != PlayerSlot)
         {
-            if(!isDraggable)
+            if(!isDraggable || PlayerManager.AttackDisplayOpened || PlayerManager.DestroyDisplayOpen)
             {
                 return;
             }

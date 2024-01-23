@@ -26,6 +26,7 @@ public class CardDetails : NetworkBehaviour
     public Sprite PurpleHighlight;
     public Sprite NoHightlight;
     public Sprite DamagedHighlight;
+    public Sprite DestroyHighlight;
 
 
     public Image cardHighlightImage;
@@ -74,6 +75,7 @@ public class CardDetails : NetworkBehaviour
         GreyHighlight = UIManager.GreyCardHighlight;
         PurpleHighlight = UIManager.PurpleCardHighlight;
         DamagedHighlight = UIManager.DamagedCardHighlight;
+        DestroyHighlight = UIManager.DestroyCardHighlight;
 
         foreach (Transform child in gameObject.GetComponentsInChildren<Transform>())
         {
@@ -116,9 +118,7 @@ public class CardDetails : NetworkBehaviour
 
     public void PermSetCardHealth(int newHealth)
     {
-        int diffHealth = newHealth - MaxCardHealth;
-
-        CurrentCardHealth += diffHealth;
+        CurrentCardHealth = newHealth;
         MaxCardHealth = newHealth;
         UpdateCardText();
     }

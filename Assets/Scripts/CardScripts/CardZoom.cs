@@ -9,6 +9,7 @@ public class CardZoom : MonoBehaviour
     public GameObject Card;
     public Sprite zoomCardSprite;
     private GameObject zoomCard;
+    public bool CardDead = false;
 
 
     public void Awake()
@@ -18,6 +19,10 @@ public class CardZoom : MonoBehaviour
 
     public void OnHoverEnter()
     {
+        if(CardDead)
+        {
+            return;
+        }
         if(gameObject.GetComponent<Image>().sprite != gameObject.GetComponent<CardFlipper>().CardBack)
         {
             zoomCardSprite = gameObject.GetComponent<Image>().sprite;
@@ -44,6 +49,7 @@ public class CardZoom : MonoBehaviour
 
     public void OnHoverExit()
     {
+        CardDead = false;
         Destroy(zoomCard);
     }
 }
